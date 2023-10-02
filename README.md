@@ -32,4 +32,4 @@
 |[정지만](https://github.com/jjm2317)|[김성준](https://github.com/SeongJoon-K)|[황재영](https://github.com/hwangjy0913)|
 |산업시스템공학|산업시스템공학|수학과|
 |Frontend|Backend|Backend,DL|
-|FE : <br> |BE : <br> |BE : <br> FE : |
+|FE : <br> |BE : <br> |BE : <br> DL : |
