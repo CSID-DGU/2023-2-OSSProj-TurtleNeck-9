@@ -30,6 +30,6 @@
 |<img src="https://avatars.githubusercontent.com/u/67041750?v=4" width="80">|<img src="https://avatars.githubusercontent.com/u/89504367?v=4" width="80">|<img src="https://avatars.githubusercontent.com/hwangjy0913" width="80">|
 |:---:|:---:|:---:|
 |[정지만](https://github.com/jjm2317)|[김성준](https://github.com/SeongJoon-K)|[황재영](https://github.com/hwangjy0913)|
-|산업시스템공학|산업시스템공학|수학과|
+|산업시스템공학과|산업시스템공학과|수학과|
 |Frontend|Backend|Backend,DL|
 |FE : <br> |BE : <br> |BE : <br> DL : |
