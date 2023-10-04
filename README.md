@@ -33,3 +33,10 @@
 |산업시스템공학과|산업시스템공학과|수학과|
 |Frontend|Backend|Backend,DL|
 |FE : <br> |BE : <br> |BE : <br> DL : |
+
+
+
+## 커밋 컨벤션 
+
+다음 컨벤션을 따릅니다. 
+- https://www.conventionalcommits.org/en/v1.0.0/
