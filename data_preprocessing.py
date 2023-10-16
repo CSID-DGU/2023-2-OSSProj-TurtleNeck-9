@@ -17,7 +17,7 @@ def data_preprocessing(embedding_dimension=16):
   #return은 embedding table, 어휘사전(vocab2idx, idx2vocab), 정수 encoding된 data_list(for 정답 label = 첫번째 열 제거), embedding된 data_list(for 입력 = 마지막 열 제거 - padding 전에 제거해야 됨!) 아님  정수 encoding된 data_list(for 입력 = 마지막 열 제거 - padding 전에!)
 
   #1. excel 파일(훈련데이터) 받기
-  df = pd.read_excel('C:\Users\USER\OneDrive\바탕 화면\융합 소프트웨어\오픈소스소프트웨어프로젝트\수강신청데이터.xlsx')
+  df = pd.read_excel('C:\\Users\\USER\\OneDrive\\바탕 화면\\융합 소프트웨어\\오픈소스소프트웨어프로젝트\\수강신청데이터.xlsx')
   print("raw data df = \n",df)
   #진로 열 빼기!
   #원래는 여기서 학기 별로 특정 순서에 맞게 정렬하면, 더 정확한 DB 만들 수 있음
@@ -31,12 +31,12 @@ def data_preprocessing(embedding_dimension=16):
   NanX_data_list = [[value for value in row if pd.notna(value)] for row in raw_data_list]#리스트 컴프리헨션 : 각 문장(raw)들은 nan값이 제거된 문장([value for value in row if pd.notna(value)])들이 되어 NanX_data_list를 이룬다.
   print("Nan_elimiated_list = \n",NanX_data_list)
     #end 패드 각 문장마다 마지막에 넣기
-  NanX_data_list = [sentence.append("end") for sentence in NanX_data_list]
+  NanX_data_list = [sentence.append("<end>") for sentence in NanX_data_list]
 
   #4. tokenizer로 정수 인코딩, 어휘 사전 만들기
   tokenizer = Tokenizer()
-  tokenizer.fit_on_texts(NanX_data_list)#토큰화까지 완료된 sentence 집합(각 sentence들은 list들이 되어 있고, 이 list들이 하나
-     #즉, tokenizer.fit_on_texts(sentences)는 각 원소들이 string으로 된 문장들의 list를 받아 토큰화+이로부터 단어집합을 만들거나 이미
+  tokenizer.fit_on_texts(NanX_data_list)#토큰화까지 완료된 sentence 집합(각 sentence들은 list들이 되어 있고, 이 list들이 하나의 list로 묶여있는 데이터)을 입력한 것으로, 여기선 multi_label이 이에 해당 | but 각 sentence들이 String(토큰화 x)인 상태인 1차원 list를 입력하면, 토큰화까지 자동으로 해줌!
+    #즉, tokenizer.fit_on_texts(sentences)는 각 원소들이 string으로 된 문장들의 list를 받아 토큰화+이로부터 단어집합을 만들거나 이미
   #4-1.어휘사전 만들기
   vocab2idx = tokenizer.word_index#단어 집합(어휘사전)
 
@@ -47,7 +47,7 @@ def data_preprocessing(embedding_dimension=16):
   vocab_size = len(vocab2idx) + 1  # 단어 집합(vocabulary)의 크기를 어휘 사전(word2idx)의 길이에 1을 더한 이유는 일반적으로 자연어 처리 모델에서 사용되는 토큰 중 하나를 예약(reserved)하기 위해서입니다. 이 토큰은 텍스트에서 특정 단어가 아닌 "알 수 없는 단어" 또는 "패딩"을 나타내는데 사용됩니다.
   print('단어 집합의 크기 :', vocab_size)
   idx2vocab = {value : key for key, value in vocab2idx.items()}#어휘사전 vocab은 key가 단어 즉, string이라서, 이후, 네거티브 샘플링이 잘 되었는지(데이터 셋이 올바르게 중심, 주변 단어로 짝지어져 있는지) 단어로 확인하려면, indexing으로 확인해야 하지만, key가 string, value가 index인 상태라 불가능하다. -> key-value 관계를 반대로 할 필요!
-  idx2vocab[0] = ""#나중에 예측 문장 확인할 때 0을 바꿀 때 사용 (실제로 SGNS의 embedding matrix에서 0행은 제로패딩시의 token의 embedding vector여야 하기에!!!)
+  idx2vocab[0] = "<pad>"#나중에 예측 문장 확인할 때 0을 바꿀 때 사용 (실제로 SGNS의 embedding matrix에서 0행은 제로패딩시의 token의 embedding vector여야 하기에!!!)
   print("idx2vocab = ",idx2vocab)
 
   #5. SGNS
@@ -93,10 +93,9 @@ def data_preprocessing(embedding_dimension=16):
 #패딩 전에 return값의 마지막 2개부터 만들고, 이 둘을 각각 패딩!
   #6. 정답 label(정수 인코딩된 label(encoded_data_list)에서 첫번째 단어들만 삭제), 훈련 데이터 만들기(정수 인코딩된 label(encoded_data_list)에서 마지막 단어들만 삭제)
   encoded_data_list_answer = [sentence[1:] for sentence in encoded_data_list]#정답 label-첫 단어만 빠졌는지 확인
-  encoded_data_list_input = [sentence[:len(sentence)-1] for sentence in encoded_data_list]#input data - 마지막 단어(end패드 말고)(sentence[len(sentence)-1])만 빠졌는지 확인
-  encoded_data_list_input = []
+  encoded_data_list_input = [sentence[:len(sentence)] for sentence in encoded_data_list]#input data - 마지막 단어(end패드)
 
-
+  #정답 라벨이 훈련 데이터에 비해 단어(정수 인코딩된)들이 한칸씩 먼저 나오는지 확인(for 실제 운용시, 입력된 기수강과목으로부터 마지막으로 들은 과목으로부터 이후에 들을 과목을 예측하기 위해서 = 즉, 다음에 들을(나올) 단어를 예측하는 겄!)
   print("정답 label(첫 단어들만 빠졌는지 확인) = \n",encoded_data_list_answer)
   print("훈련 데이터(마지막 단어들만 빠졌는지 확인) = \n",encoded_data_list_input)
 
@@ -107,5 +106,5 @@ def data_preprocessing(embedding_dimension=16):
   encoded_data_list_input_padded = pad_sequences(encoded_data_list_input, maxlen=max_len,padding='post')
   print("패딩 정답 label = \n", encoded_data_list_answer_padded)
   print("패딩 훈련 label = \n", encoded_data_list_input_padded)
-#훈련 데이터 패딩은 Neural net에서 할 것
+#input 데이터 embedding은 Neural net에서 할 것
   return word_embedding_table, vocab2idx, idx2vocab, encoded_data_list_answer_padded, encoded_data_list_input_padded
