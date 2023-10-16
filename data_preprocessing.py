@@ -93,7 +93,7 @@ def data_preprocessing(embedding_dimension=16):
 #패딩 전에 return값의 마지막 2개부터 만들고, 이 둘을 각각 패딩!
   #6. 정답 label(정수 인코딩된 label(encoded_data_list)에서 첫번째 단어들만 삭제), 훈련 데이터 만들기(정수 인코딩된 label(encoded_data_list)에서 마지막 단어들만 삭제)
   encoded_data_list_answer = [sentence[1:] for sentence in encoded_data_list]#정답 label-첫 단어만 빠졌는지 확인
-  encoded_data_list_input = [sentence[:len(sentence)] for sentence in encoded_data_list]#input data - 마지막 단어(end패드)
+  encoded_data_list_input = [sentence[:len(sentence)-1] for sentence in encoded_data_list]#input data - 마지막 단어(end패드)
 
   #정답 라벨이 훈련 데이터에 비해 단어(정수 인코딩된)들이 한칸씩 먼저 나오는지 확인(for 실제 운용시, 입력된 기수강과목으로부터 마지막으로 들은 과목으로부터 이후에 들을 과목을 예측하기 위해서 = 즉, 다음에 들을(나올) 단어를 예측하는 겄!)
   print("정답 label(첫 단어들만 빠졌는지 확인) = \n",encoded_data_list_answer)
