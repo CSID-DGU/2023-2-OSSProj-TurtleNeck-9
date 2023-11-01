@@ -128,15 +128,15 @@ class study_system:
         else:
             return list_subj2learn#가장 처음 시작 노드로서의 subj_node가 입력값일 땐, 즉, 처음 호출되 find_first_prev_subj_to_learn일 땐, 이것이 return된다.
 
-    def random_sampling(self,iteration,n1,n2,n3,n4):#n1:1학년 과목에서 뽑을 과목 수...
+    def random_sampling(self,iteration,n1,n2,n3,n4,n5,n6,n7,n8):#n1:1학년 1학기과목에서 뽑을 과목 수...
         samples=list()
         for iter in range(iteration):#iteration: 뽑을 sample 갯수
-            num_subj_each_grade=[n1,n2,n3,n4]
+            num_subj_each_grade=[n1,n2,n3,n4,n5,n6,n7,n8]
             i=0
+            grade_seme = [11,12,21,22,31,32,41,42]#11 = 1학년 1학기
             result=list()#한 샘플이 들은 과목 list(들은 순서대로(name list))
             for num in num_subj_each_grade:
-                i+=1
-                cnddt=self.search_randomsubj_by_grade(num,i)#i학년 때 들을 과목 후보군(노드 리스트)
+                cnddt=self.search_randomsubj_by_grade(num,grade_seme[i])#grade_seme[i](학년학기) 때 들을 과목 후보군(노드 리스트)
                 #이 후보군의 각 선수과목에 대해서 학습했는지 파악하기(즉 result에 선수과목 이름 있는지 후보군의 각 노드별로 파악) -> 없으면, 그 선수과목 노드와 이 후보군의 노드 바꾸기(cnddt에서)
                 for subj_node in cnddt:
                     subjs2learn_first=self.find_first_prev_subjs_to_learn(subj_node,result)#각 subj_node의 subj의 선수과목 모두 들었으면, [subj_node]출력되게 함.
@@ -153,8 +153,7 @@ class study_system:
                         subjs2learn.append(subj)
                         #이 자리에 만약 prev_subj_node의 권장 선이수 교과목 들은 것이 하나도 없다면, random으로 0~2개 듣게 하기(즉, subjs2learn_first 자리에 추가!)
                     result.extend(subjs2learn)
-                    
-                    
+
                     #만약 for subj_node in cnddt:문 제대로 작동 x -> 밑의 주석처리 코드로 하고 위 내용은 지우기!
                     """
                     #0. 해당 후보 노드(subj_node)의 과목에 대해 비슷한 과목이 있으면, 이들 중 하나를 random으로 선택해 append하고, 없으면, 그냥 subj_node의 과목 이름을 result에 추가 -> 이후 1....에서 이 과목의 선수과목 들었는지 여부 조사할 것
@@ -195,5 +194,6 @@ class study_system:
                                 sim_subj=random.sample(sim_subjs_of_prev_subj,1)[0]
                                 result.append(sim_subj)
                                 """
+                i+=1
             samples.append(result)
         return samples
