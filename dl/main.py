@@ -6,9 +6,11 @@ ISE.grade2names={1:["어드벤처디자인","산업시스템공학의이해"],2:
 #산업시스템공학과 이수체계도 만들기
 ISE.insert_last(subj_name="산업시스템공학의이해",grade=1)
 ISE.insert_last(subj_name="어드벤처디자인",grade=1,prev_subj_rec_names=["산업시스템공학의이해"])
-ISE.insert_last(subj_name="응용통계학",grade=2);ISE.insert_last(subj_name="3D모델링",grade=2);ISE.insert_last(subj_name="인간공학",grade=2);ISE.insert_last(subj_name="산업시스템프로그래밍1",grade=2)
+ISE.insert_last(subj_name="응용통계학",grade=2,Sim_Subj=["확률및통계학"]);ISE.insert_last(subj_name="3D모델링",grade=2);ISE.insert_last(subj_name="인간공학",grade=2);ISE.insert_last(subj_name="산업시스템프로그래밍1",grade=2)
 ISE.insert_last(subj_name="경영과학1",grade=2);ISE.insert_last("데이터분석입문",grade=2,prev_subj_nec_names=["응용통계학"]);ISE.insert_last(subj_name="정보시스템분석설계",grade=2)
 ISE.insert_last(subj_name="경영과학2",grade=3,prev_subj_nec_names=["응용통계학"]);ISE.insert_last(subj_name="실험계획법",grade=3,prev_subj_nec_names=["응용통계학"]);ISE.insert_last(subj_name="머신러닝1",grade=3,prev_subj_rec_names=["데이터분석입문"]);ISE.insert_last(subj_name="생산및운영관리",grade=3);ISE.insert_last(subj_name="금융공학입문",grade=3,prev_subj_nec_names=["응용통계학"])
 ISE.insert_last(subj_name="품질공학",grade=3,prev_subj_nec_names=["응용통계학"]);ISE.insert_last(subj_name="첨단제조공학",grade=3);ISE.insert_last(subj_name="머신러닝2",grade=3,prev_subj_rec_names="머신러닝1");ISE.insert_last(subj_name="기술경영",grade=3,prev_subj_nec_names=["응용통계학"]);ISE.insert_last(subj_name="유통물류관리",grade=3,prev_subj_nec_names=["생산및운영관리","경영과학1"]);ISE.insert_last(subj_name="헬스케어공학",grade=3,prev_subj_rec_names=["인간공학"]);ISE.insert_last(subj_name="산업시스템프로그래밍2",grade=3,prev_subj_rec_names=["산업시스템프로그래밍1"])
 ISE.insert_last(subj_name="서비스공학",grade=4,prev_subj_nec_names=["응용통계학"]);ISE.insert_last(subj_name="프로젝트관리",grade=4,prev_subj_nec_names=["응용통계학"]);ISE.insert_last(subj_name="시뮬레이션과응용",grade=4,prev_subj_nec_names=["응용통계학"]);ISE.insert_last(subj_name="데이터어낼리틱스",grade=4,prev_subj_rec_names=["머신러닝1","머신러닝2"]);ISE.insert_last(subj_name="정보시스템통합및실습",grade=4,prev_subj_rec_names=["정보시스템분석설계"]);ISE.insert_last(subj_name="산업시스템공학종합설계",grade=4,prev_subj_nec_names=["산업시스템공학의이해","어드벤처디자인","응용통계학","산업시스템프로그래밍1","경영과학1"])
 ISE.insert_last(subj_name="제품개발",grade=4);ISE.insert_last(subj_name="UI/UX설계",grade=4,prev_subj_rec_names=["인간공학","정보시스템분석설계"]);ISE.insert_last(subj_name="산업AI",grade=4,prev_subj_rec_names=["정보시스템분석설계"]);ISE.insert_last(subj_name="캡스톤디자인대회",grade=4)
+
+ISE.random_sampling(10,n1=1,n2=5,n3=8,n4=6)

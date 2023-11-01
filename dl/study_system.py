@@ -97,32 +97,33 @@ class study_system:
     def find_first_prev_subjs_to_learn(self, subj_node,taken_subjects):#taken_subjects(이미 들은 subject list)가 주어졌을 때, subj_node의 가장 처음으로 들어야할 subject노드를 return
         #밑의 random_sampling에서 쓰일 때, subj_node=prev_subj_node | taken_subjects=result(subject 이름들(string)의 list)
         #1. subj_node의 모든 필수 선수과목을 들었을 경우, subj_node return
-        if subj_node.Prev_Subj_nec[0] == self.head:#더 이상 recursion 할 거 없으니, 이 recursion일어나면 안 되고, 지금의 prev_subj가 들어야할 과목임!
+        if subj_node.Prev_Subj_nec[0] == self.head:#더 이상 recursion 할 거 없으니, 이 recursion일어나면 안 되고, 지금의 이 subj_node가 들어야할 과목이라는 뜻!(이 if문 실행시, 이 subj_node의 선수과목 x 의미이니까!)
             return [subj_node]
         list_subj2learn=[]
         i=0
+            #subj_node의 모든 필수 선수과목을 뽑아 리스트(prev_subj_names)로 만들고, 이 각 과목+비슷한 과목들 중 하나라도 들었는지 확인(by for문)
         prev_subj_names=[prev_subj_node.Subj_Name for prev_subj_node in subj_node.Prev_Subj_nec]#같은 단계의(즉 여기서prev_subj_names 서로 같이 들을 수 있는 과목들이다.)
         for prev_subj in prev_subj_names:#선이수과목 각각에 대해
             if prev_subj in taken_subjects:#들은 과목 리스트에 있으면, 다음 선이수과목 있는지 검사
                 continue
             else:#없으면, 이 prev_subj와 비슷한 과목(Sim_Subj)이 하나로도 있는지 보기 -> 하나라도 있으면 다음 선이수과목 검사 | 없으면 recursion
                 prev_subj_node_p=self.search_by_id(self.head,self.name2id[prev_subj])
-                Sim_Subjs_of_prev_subj=[sim_subj for sim_subj in prev_subj_node_p.Sim_Subj]
-                exist_sim_subj="None"
-                for sim_subj_p in Sim_Subjs_of_prev_subj:
+                Sim_Subjs_of_prev_subj=[sim_subj for sim_subj in prev_subj_node_p.Sim_Subj]#prev_subj_node_p.Sim_Subj은 string list
+                exist_sim_subj="None"#비슷한 과목이 taken_subject에 있으면, 그 과목을 exist_sim_subj로 할 것
+                for sim_subj_p in Sim_Subjs_of_prev_subj:#만약 비슷한 과목이 없으면 빈 배열이니, 그냥 for문 넘어가게 됨.
                     if sim_subj_p in taken_subjects:
                         exist_sim_subj=sim_subj_p
                         break
                 if exist_sim_subj in taken_subjects:#비슷한 과목 찾았으면, 다음 prev_subj에 대해서 검사
                     continue
-        #2. 안 들은 필수 선수과목 남아있은 경우, recursive를 통해 처음으로 들어야할 필수 선수과목들의 node 찾기 
+        #2. 안 들은 필수 선수과목(위 continue를 지나쳐 오면, 안 들은 필수 선수과목 = prev_subj) 남아있은 경우, recursive를 통해 처음으로 들어야할 필수 선수과목들의 node 찾기 
                 #Sim_Subj조차도 하나도 taken_subjects에 없으면 이 prev_node를 꼭 들어야 하는데, 안들은 것이니 이 전(prev_node.Prev_Node_nec) 필수 선이수는 들었는지 체크(by recursion)
                 i+=1
                 #아직 더 이전 과목으로 갈 수 있으면,(prev_subj를 안 들은 경우 더 이전 subj는 들었는지 체크하여 그것을 안들었으면, prev_subj는 못 듣고, 이 subj만 듣게 할 것)
                 #이건 가장 최상위 for문과 continue문을 보면 알 수 있겠지만, prev_subj_node_p의 subject인 prev_subj, 이와 비슷한 subj 모두 안 들었을 때, 이 recursion 실행
                 list_subj2learn.extend(self.find_first_prev_subjs_to_learn(prev_subj_node_p,taken_subjects))
         #prev_subj모두 들은 상태(모든 prev_subj에 대해서 i+=1이 실행 x 의미!)에서 subj_node인 경우, subj_node가 가장 처음으로 들어야할 subj임!
-        if i==0:
+        if i==0:            
             return [subj_node]
         else:
             return list_subj2learn#가장 처음 시작 노드로서의 subj_node가 입력값일 땐, 즉, 처음 호출되 find_first_prev_subj_to_learn일 땐, 이것이 return된다.
@@ -130,24 +131,29 @@ class study_system:
     def random_sampling(self,iteration,n1,n2,n3,n4):#n1:1학년 과목에서 뽑을 과목 수...
         samples=list()
         for iter in range(iteration):#iteration: 뽑을 sample 갯수
-            list=[n1,n2,n3,n4]
+            num_subj_each_grade=[n1,n2,n3,n4]
             i=0
             result=list()#한 샘플이 들은 과목 list(들은 순서대로(name list))
-            for num in list:
+            for num in num_subj_each_grade:
                 i+=1
                 cnddt=self.search_randomsubj_by_grade(num,i)#i학년 때 들을 과목 후보군(노드 리스트)
                 #이 후보군의 각 선수과목에 대해서 학습했는지 파악하기(즉 result에 선수과목 이름 있는지 후보군의 각 노드별로 파악) -> 없으면, 그 선수과목 노드와 이 후보군의 노드 바꾸기(cnddt에서)
                 for subj_node in cnddt:
                     subjs2learn_first=self.find_first_prev_subjs_to_learn(subj_node,result)#각 subj_node의 subj의 선수과목 모두 들었으면, [subj_node]출력되게 함.
                     #위 노드 리스트를 문자열 리스트로
-                    subjs2learn_first=[]#만약 subj_node의 과목의 선이수 과목 모두 이수했으면, 이것은 [subj_node.Subj_Name]이 된다!
+#수정할 부분 : 바로 위에서 subjs2learn_first정의 후 바로 뒤에 초기화하면 의미x -> 다시!
+                    #subjs2learn_first는 subj_node 듣기 위해 필요한 과목들의 노드들의 리스트로, 만약, result에 이 과목들이 모두 포함되어 있으면, subj_node만이 이 리스트에 들어 있을 것([subj_node])
+                    subjs2learn=[]
+                    #이 for문은 각 필수 선이수 과목(prev_subj_node)에 대해 비슷한 과목을 포함해서 하나만 골라 
+                    #subj_node의 과목을 듣기 위해 필요한 과목들을 모으는 것으로, 만약 이미 필요한 필수 선이수 과목 다 들었으면, prev_subj_node=subj_node임을 기억하기
                     for prev_subj_node in subjs2learn_first:
-                        sim_subjs=[subj  for subj in prev_subj_node.Sim_Subj]
+                        sim_subjs=[subj  for subj in prev_subj_node.Sim_Subj]#string list
                         sim_subjs.append(prev_subj_node.Subj_Name)
                         subj=random.sample(sim_subjs,1)[0]
-                        subjs2learn_first.append(subj)
+                        subjs2learn.append(subj)
                         #이 자리에 만약 prev_subj_node의 권장 선이수 교과목 들은 것이 하나도 없다면, random으로 0~2개 듣게 하기(즉, subjs2learn_first 자리에 추가!)
-                    result.extend(subjs2learn_first)
+                    result.extend(subjs2learn)
+                    
                     
                     #만약 for subj_node in cnddt:문 제대로 작동 x -> 밑의 주석처리 코드로 하고 위 내용은 지우기!
                     """
