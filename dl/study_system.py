@@ -4,7 +4,7 @@ class study_system:
     class Node:
         def __init__(self,Subj_Name="",Subj_ID="",grade=0,Prev_Subj_nec=list(),After_Subj=list(),Prev_Subj_rec=list(),Sim_Subj=list()):
             self.Prev_Subj_nec = Prev_Subj_nec#선이수 과목 리스트(Node 객체 리스트) - 이들을 전부 들었을 때만 이 과목 들을 수 있도록 연결할 것
-            self.Prev_Subj_rec = Prev_Subj_rec#권장 선이수 과목 리스트(string 리스트)
+            self.Prev_Subj_rec = Prev_Subj_rec#권장 선이수 과목 리스트(Node 객체 리스트)
             self.Sim_Subj= Sim_Subj#비슷한 과목 리스트(이름 or 과목id 리스트로 할 것)
             self.After_Subj = After_Subj#이 과목 이후에 들을 과목들(노드 리스트)(이후, insert할 때, 이 Prev_Subj, After_Subj가 채워질 것)
             
@@ -45,11 +45,13 @@ class study_system:
         if subj_name not in self.name2id.keys():
             print("전공에 알맞은 과목이 아닙니다. dictionary name2id에 등록된 과목인지 확인하기")
         else:
+            new_subj_node=self.Node(Subj_Name=subj_name,Subj_ID=self.name2id[subj_name],grade=grade,Prev_Subj_nec=list(),After_Subj=list(),Prev_Subj_rec=list(), Sim_Subj=Sim_Subj)
             if len(prev_subj_nec_names)==0:#즉, 선이수 과목이 없는 과목 노드를 추가하고 싶은 경우엔 head,tail와만 연결하면 됨.
+            #1. 필수 선이수 관계 연결
                 #함수 입력값 보면 알 수 있듯이, 필수 선이수 과목은 id로 노드 search해야 하기에 일단 new node만들 때, 빈 리스트(Prev_Subj_nec=list())로 만들고, 이후에 하나씩 필수 선이수 과목 노드를 id로부터 찾아 넣지만
                 #권장 선이수 과목 list(prev_subj_rec_names)와 비슷한 과목 list(Sim_Subj)은 노드에서 string list이기에
                 #메서드 호출할 때, 다 입력할 것!
-                new_subj_node=self.Node(Subj_Name=subj_name,Subj_ID=self.name2id[subj_name],grade=grade,Prev_Subj_nec=list(),After_Subj=list(),Prev_Subj_rec=prev_subj_rec_names, Sim_Subj=Sim_Subj)
+#                new_subj_node=self.Node(Subj_Name=subj_name,Subj_ID=self.name2id[subj_name],grade=grade,Prev_Subj_nec=list(),After_Subj=list(),Prev_Subj_rec=prev_subj_rec_names, Sim_Subj=Sim_Subj)
                 #tail과 양방향 연결
                 new_subj_node.After_Subj.append(self.tail)#마지막 계층의 자식노드가 추가되는 것이니, tail과 연결(밑의 줄 포함 - 양방향 연결)
                 self.tail.Prev_Subj_nec.append(new_subj_node)
@@ -62,7 +64,7 @@ class study_system:
                 if self.head in self.tail.Prev_Subj_nec:
                     del self.tail.Prev_Subj_nec[self.tail.Prev_Subj_nec.index(self.head)]
             else:#선이수 과목이 있는 경우(즉, 선이수 과목 노드 저장되어 있는 상태)
-                new_subj_node=self.Node(Subj_Name=subj_name,Subj_ID=self.name2id[subj_name],grade=grade,Prev_Subj_nec=list(),After_Subj=list(),Prev_Subj_rec=prev_subj_rec_names, Sim_Subj=Sim_Subj)
+#                new_subj_node=self.Node(Subj_Name=subj_name,Subj_ID=self.name2id[subj_name],grade=grade,Prev_Subj_nec=list(),After_Subj=list(),Prev_Subj_rec=prev_subj_rec_names, Sim_Subj=Sim_Subj)
                 #마지막 계층의 자식노드가 추가되는 것이니, tail과 연결(밑의 줄 포함 - 양방향 연결)
                 new_subj_node.After_Subj.append(self.tail)
                 self.tail.Prev_Subj_nec.append(new_subj_node)
@@ -80,7 +82,18 @@ class study_system:
                         del self.tail.Prev_Subj_nec[self.tail.Prev_Subj_nec.index(prev_node)]#prev_node가 tail의 선수과목에 있으면(즉, tail과 연결되어 있으면), 연결 끊기
                     prev_node.After_Subj.append(new_subj_node)#직전 선수과목들에게 이후 들을 과목으로 new_subj_node 지정
                     new_subj_node.Prev_Subj_nec.append(prev_node)#이 new_subj의 선수과목 연결하기(즉, 양방향 연결)
-    
+            #필수 선이수 관계 연결 끝났으면, 권장 선이수관계 연결
+            #2. 권장 선이수 관계 연결(단방향 - Prev_Subj_rec은 이후, 들었는지 여부 체크용으로 쓸 것이기에 이전 단계 방향으로 연결하는 것만 하면 됨.)
+            if len(prev_subj_rec_names)==0:#해당 과목(subj_name)의 권장 선이수 과목이 없는 경우, 마지막 지점 self.head노드와 연결
+                new_subj_node.Prev_Subj_rec.append(self.head)
+            else:#권장 선이수 과목 있는 경우
+                #권장 선이수 과목 id 각각 찾아 -> id리스트 -> by for문, id로 노드 찾아 Prev_Subj_rec에 append
+                prev_subj_rec_ids = list()
+                for name in prev_subj_rec_names:
+                    prev_subj_rec_ids.append(self.name2id[name])
+                for id in prev_subj_rec_ids:
+                    prev_rec_node = self.search_by_id(self.head,id)#권장 선이수 과목은 단방향 연결(head쪽)이면 충분
+                    new_subj_node.Prev_Subj_rec.append(prev_rec_node)
     #colab에서 객체 list 생성후, del, ... in ... 똑바로 작동하는지 확인해보기
 
     def search_randomsubj_by_grade(self, n, grade):#n:sample로 뽑을 과목 개수, grade : 해당 학년에 속한 과목들 중에 뽑을 것
@@ -137,11 +150,11 @@ class study_system:
             result=list()#한 샘플이 들은 과목 list(들은 순서대로(name list))
             for num in num_subj_each_grade:
                 cnddt=self.search_randomsubj_by_grade(num,grade_seme[i])#grade_seme[i](학년학기) 때 들을 과목 후보군(노드 리스트)
-                #이 후보군의 각 선수과목에 대해서 학습했는지 파악하기(즉 result에 선수과목 이름 있는지 후보군의 각 노드별로 파악) -> 없으면, 그 선수과목 노드와 이 후보군의 노드 바꾸기(cnddt에서)
+                #이 후보군의 각 필수선수과목에 대해서 학습했는지 파악하기(즉 result에 선수과목 이름 있는지 후보군의 각 노드별로 파악) -> 없으면, 그 선수과목 노드와 이 후보군의 노드 바꾸기(cnddt에서)
                 for subj_node in cnddt:
+                    #1.필수 선이수 검사(subj_node)
                     subjs2learn_first=self.find_first_prev_subjs_to_learn(subj_node,result)#각 subj_node의 subj의 선수과목 모두 들었으면, [subj_node]출력되게 함.
                     #위 노드 리스트를 문자열 리스트로
-#수정할 부분 : 바로 위에서 subjs2learn_first정의 후 바로 뒤에 초기화하면 의미x -> 다시!
                     #subjs2learn_first는 subj_node 듣기 위해 필요한 과목들의 노드들의 리스트로, 만약, result에 이 과목들이 모두 포함되어 있으면, subj_node만이 이 리스트에 들어 있을 것([subj_node])
                     subjs2learn=[]
                     #이 for문은 각 필수 선이수 과목(prev_subj_node)에 대해 비슷한 과목을 포함해서 하나만 골라 
@@ -151,49 +164,38 @@ class study_system:
                         sim_subjs.append(prev_subj_node.Subj_Name)
                         subj=random.sample(sim_subjs,1)[0]
                         subjs2learn.append(subj)
-                        #이 자리에 만약 prev_subj_node의 권장 선이수 교과목 들은 것이 하나도 없다면, random으로 0~2개 듣게 하기(즉, subjs2learn_first 자리에 추가!)
+                    #2. 권장 선이수 검사(subj_node의)
+                    #이 자리에 만약 subj_node의 권장 선이수 교과목 들은 것이 하나도 없다면, random으로 0~2개 듣게 하기(즉, subjs2learn_first 자리에 추가!)
+                    #즉, 이 subj_node의 Prev_Subj_rec 중 하나도 들은 것이 없다면, Prev_Subj_rec 중 0~len(Prev_Subj_rec)-1개 중 random 개수만큼 Prev_Subj_rec 뽑아 듣게 하기
+                    #->이를 하기 위해선 1. Node 클래스에서 Prev_Subj_rec도 nec처럼 Node 객체 리스트로, 2. InsertLast 바꾸기 3. 이 메서드 이 위치에서 바로 rec 있는지 찾고, result에 sim_subj 있는지까지 바로 판단(self.find_first_prev_subjs_to_learn와 달리 recursion까지 할 필요 x - 권장이니까! -> 같이 들을 수 있게 할 것)
+                    if self.head not in subj_node.Prev_Subj_rec:#insert_last참고하면 권장 선수 과목 x인 과목 노드들은 Prev_Subj_rec에 self.head 넣어 가리키게 해놨으므로, self.head가 아닌 경우만 이 if문 실행되게 하기
+                        #subj_node.Prev_Subj_rec의 각 노드(prev_subj_rec_node)의 과목 or sim_subj 중 하나라도 result에 있는지 확인 -> 없을 땐, random으로 subj2learn에 집어넣을지 결정하기
+                        #find_first_prev_subjs_to_learn함수 부분 응용하기    
+                        prev_subj_rec_names=[prev_subj_rec_node.Subj_Name for prev_subj_rec_node in subj_node.Prev_Subj_rec]
+                        Existence_of_prev_subj = "None"
+                        for subj_name in prev_subj_rec_names:
+                            if subj_name in result:
+                                Existence_of_prev_subj = "Yes"
+                                break
+                            #subj_name에 대한 학점상호 인정 교과목(sim_subj)도 모두 없는지 확인
+                            for sim_subj in self.search_by_id(self.head,self.name2id[subj_name]).Sim_Subj:
+                                if sim_subj in result:
+                                    Existence_of_prev_subj = "Yes"
+                                    break#하나라도 있으면 권장 선이수 들은 것이나 마찬가지 이기에!
+                            if Existence_of_prev_subj == "Yes":#해당 권장 선이수 과목과 이의 sim_subj 중 하나라도 들었으면, 권장 선이수 더 이상 추가 안 해도 되게 한 것(Existence_of_prev_subj = "Yes"가 되기에 밑의 if 문 과정 x)
+                                break
+                        if Existence_of_prev_subj=="None":#권장 선이수 들은 것이 없으면 0~선이수 과목 전부 듣는 선택 중 하나는 하기
+                            num2learn_prev_subj_rec=random.randrange(1,len(subj_node.Prev_Subj_rec)+1)#1 이상의 권장 선이수 과목 random으로 선택하여 듣게 하기
+                            #subj_node.Prev_Subj_rec에서 num2learn_prev_subj_rec만큼 random으로 선택
+                            subjs_rec_nodes_2learn=random.sample(subj_node.Prev_Subj_rec,num2learn_prev_subj_rec)
+                            #선택된 각 노드마다 sim_subj와 같이 리스트로 묵어 random으로 하나씩 이름 선택 -> subjs2learn.append하기!
+                            subj_rec_names2learn=[]
+                            for subj_rec_node in subjs_rec_nodes_2learn:
+                                sim_subjs=[subj  for subj in subj_rec_node.Sim_Subj]#string list
+                                sim_subjs.append(subj_rec_node.Subj_Name)
+                                subj=random.sample(sim_subjs,1)[0]
+                                subjs2learn.append(subj)
                     result.extend(subjs2learn)
-
-                    #만약 for subj_node in cnddt:문 제대로 작동 x -> 밑의 주석처리 코드로 하고 위 내용은 지우기!
-                    """
-                    #0. 해당 후보 노드(subj_node)의 과목에 대해 비슷한 과목이 있으면, 이들 중 하나를 random으로 선택해 append하고, 없으면, 그냥 subj_node의 과목 이름을 result에 추가 -> 이후 1....에서 이 과목의 선수과목 들었는지 여부 조사할 것
-                    if len(subj_node.Sim_Subj) !=0:
-                        subj_list=[subj for subj in subj_node.Sim_Subj]#리스트 컴프리헨션으로 복사
-                        subj_list.append(subj_node.Subj_Name)#subj_list는 과목 이름 string의 집합
-                        cnddt_subj=random.sample(subj_list,1)[0]#비슷한 과목+선수과목 중 하나 random 선택
-                        result.append(cnddt_subj)#일단 후보군의 각 과목 추가 후, 선이수 과목 파악 여부에 따라, 안 들었으면, result에서 이 subject 제거
-                    else:
-                        cnddt_subj=subj_node.Subj_Name
-                        result.append(cnddt_subj)
-                    #1. subj_node의 Prev_Subj_nec에 head만 있는지(-> head만 있으면(선이수 과목 x의미), 생략 | 다른 과목들 있으면, 각 과목이 result에 이름 들어있는지 확인)
-                    if self.head in subj_node.Prev_Subj_nec:#선수과목 없다는 의미이니 다음 후보 과목 검사
-                        continue
-                    #2. 선수과목 있는 경우 -> 선수과목 들었는지 체크 -> 선수과목 다 들었으면, del result.append(subj_node.Subj_Name) 안 일어나고, 바로 다음 후보 노드 선수과목 다 들었는지 검사
-                    else:
-                        # 각 선수과목(prev_subj_node)이 result(지금까지 뽑은 샘플이 들은 과목)에 들어있는지 체크 -> 하나라도 안 들었으면
-                        for prev_subj_node in subj_node.Prev_Subj_nec:
-#할 것 : 권장 선이수,Sim_Subj에 대한 것도 추가하기!(Sim_Subj는 추가 완료)
-                            sim_subjs_of_prev_subj=[subj for subj in prev_subj_node.Sim_Subj]#sim_subjs_of_prev_subj은 필수선수과목의 비슷한 과목 집합
-                            sim_subjs_of_prev_subj.append(prev_subj_node.Subj_Name)
-                            exist_prev_subj="None"#선이수 과목 이름이 들어갈 자리로, 현재 초기화된 상태(비슷한 과목까지 포함한 list 중)
-                            #2-1. 선수과목 포함, 비슷한 과목 중 하나라도 result에 들은 것이 있으면, 다른 선수과목 들었는지 확인 위해 continue
-                            for prev_subj_name in sim_subjs_of_prev_subj:#이들중 아무것도 result에 없으면, 선수과목(prev_subj_node.Subj_Name) 안 들은 것이니, 이 sim_subjs_of_prev_subj 중 하나 넣기
-                                if prev_subj_name in result:#하나의 선수과목 이름이 이미 result에 있으면, 다음 선수과목 있는지 체크하게 다음 선수과목으로 넘어가기(break하여 현재 for문 벗어난 후, continue하기!)
-                                    exist_prev_subj=prev_subj_name
-                                    break
-                            if exist_prev_subj in result:#바로 위 for문에서 result에 한 과목 있음을 발견하면 이 if문 실행 \ 발견 못하면, 2-2 실행
-                                continue
-                            #2-2. 선수과목 안 들었을 때, 선수과목 넣는 부분(안들은 과목(cnddt_subj 제거))
-                            else:#선수과목이 들어있지 않으면, 처음에 추가한 cnddt_subj 제거 후, 선수과목들 넣기
-                                if cnddt_subj in result: #즉, 선수과목이 하나라도 안 들어있으면, 바로 아까 넣은 과목(cnddt_subj)이 result에서 제거되고, 선수과목이 들어감.
-                                    del result[result.index(cnddt_subj)]
-                            
-                                #현재 들어있지 않은 선수과목(prev_subj_node)로부터 가장 낮은 선수과목(prev_subj_node에 연결된) 노드 찾기(=가장 먼저 들어야할)
-                                
-#할 것2 : 이 부분 이렇게 수정    #들은 선수과목 나올 때까지 반복(나오면 break 걸고, 그 이후에 들을 과목만 result에 append!)
-                                sim_subj=random.sample(sim_subjs_of_prev_subj,1)[0]
-                                result.append(sim_subj)
-                                """
                 i+=1
             samples.append(result)
         return samples
