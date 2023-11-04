@@ -6,8 +6,18 @@ export interface Lecture {
   lectureTime: LectureTime[];
 }
 
+export enum Weekday {
+  Mon = 'mon',
+  Tue = 'tue',
+  Wed = 'wed',
+  Thu = 'thu',
+  Fri = 'fri',
+  Sat = 'sat',
+  Sun = 'sun',
+}
+
 export interface LectureTime {
-  weekday: string;
+  weekday: Weekday;
   startTime: string;
   endTime: string;
 }
