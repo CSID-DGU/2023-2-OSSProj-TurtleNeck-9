@@ -7,11 +7,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Lecture, Weekday } from '../types/lecture';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { FC } from 'react';
 
 const TIME_LIST = Array.from({ length: 14 }, (_, index) => index + 9);
-const HEIGHT = 40;
+const HEIGHT = 60;
 const WIDTH = '15%';
 
 type Props = {
@@ -20,7 +20,7 @@ type Props = {
 
 const TimeTable: FC<Props> = ({ lectureList }) => {
   return (
-    <TableContainer component={Paper} sx={{ position: 'relative' }}>
+    <TableContainer component={Paper} sx={{ position: 'relative', minWidth: 700 }}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
@@ -121,8 +121,16 @@ const LectureBox: FC<LectureBoxProps> = ({ lecture }) => {
           top={resolveTop(lectureTimeItem.startTime)}
           left={resolveLeft(lectureTimeItem.weekday)}
           position="absolute"
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
         >
-          asdf
+          <Typography fontSize="14px" variant="body1">
+            {lecture.lectureName}
+          </Typography>
+          <Typography fontSize="10px" variant="body2">
+            {lecture.professorName} ({lecture.place})
+          </Typography>
         </Box>
       ))}
     </>
