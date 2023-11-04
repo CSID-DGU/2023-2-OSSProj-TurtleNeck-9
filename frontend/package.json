@@ -9,6 +9,7 @@
     "@types/react": "^18.2.34",
     "@types/react-dom": "^18.2.14",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "@typescript-eslint/parser": "^6.9.1",
     "babel-loader": "^9.1.3",
     "css-loader": "^6.8.1",
     "eslint": "^8.0.1",
@@ -37,7 +38,8 @@
   },
   "scripts": {
     "build": "webpack",
-    "start": "webpack serve --open"
+    "start": "webpack serve --open",
+    "lint": "eslint"
   },
   "main": "index.js"
 }
