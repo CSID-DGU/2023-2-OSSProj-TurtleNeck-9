@@ -89,11 +89,10 @@ const WEEKDAY_ORDER = {
   [Weekday.Thu]: 3,
   [Weekday.Fri]: 4,
   [Weekday.Sat]: 5,
-};
+} as Record<Weekday, number>;
 
 const resolveTop = (startTime: string) => {
   const [hour, minute] = startTime.split(':').map(Number);
-
   return HEIGHT + (hour - 9 + minute / 60) * HEIGHT + 'px';
 };
 
@@ -101,6 +100,10 @@ const resolveHeight = (startTime: string, endTime: string) => {
   const [startHour, startMinute] = startTime.split(':').map(Number);
   const [endHour, endMinute] = endTime.split(':').map(Number);
   return (endHour + endMinute / 60 - (startHour + startMinute / 60)) * HEIGHT;
+};
+
+const resolveLeft = (weekday: Weekday) => {
+  return 10 + WEEKDAY_ORDER[weekday] * 15 + '%';
 };
 
 type LectureBoxProps = {
@@ -116,7 +119,7 @@ const LectureBox: FC<LectureBoxProps> = ({ lecture }) => {
           height={resolveHeight(lectureTimeItem.startTime, lectureTimeItem.endTime)}
           bgcolor="yellow"
           top={resolveTop(lectureTimeItem.startTime)}
-          left="10%"
+          left={resolveLeft(lectureTimeItem.weekday)}
           position="absolute"
         >
           asdf
