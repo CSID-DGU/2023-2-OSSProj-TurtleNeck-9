@@ -1,4 +1,6 @@
 import type { Preview } from '@storybook/react';
+import CssBaseline from '@mui/material/CssBaseline';
+
 
 const preview: Preview = {
   parameters: {
@@ -10,6 +12,13 @@ const preview: Preview = {
       },
     },
   },
+  decorators: [
+    (Story) => (
+    <>
+      <CssBaseline />
+      <Story/>
+    </>)
+    ]
 };
 
 export default preview;
