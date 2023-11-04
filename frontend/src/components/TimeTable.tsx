@@ -7,16 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-const createData = (name: string, calories: number, fat: number, carbs: number, protein: number) => {
-  return { name, calories, fat, carbs, protein };
-};
-const rows = [
-  createData('1', 159, 6.0, 24, 4.0),
-  createData('1', 237, 9.0, 37, 4.3),
-  createData('1', 262, 16.0, 24, 6.0),
-  createData('1', 305, 3.7, 67, 4.3),
-  createData('1', 356, 16.0, 49, 3.9),
-];
+const TIME_LIST = Array.from({ length: 14 }, (_, index) => index + 9);
 
 const TimeTable = () => {
   return (
@@ -24,24 +15,25 @@ const TimeTable = () => {
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell align="center">구분</StyledTableCell>
-            <StyledTableCell align="center">월요일</StyledTableCell>
-            <StyledTableCell align="center">화요일</StyledTableCell>
-            <StyledTableCell align="center">수요일</StyledTableCell>
-            <StyledTableCell align="center">목요일</StyledTableCell>
-            <StyledTableCell align="center">금요일</StyledTableCell>
-            <StyledTableCell align="center">토요일</StyledTableCell>
+            <StyledTableCell align="center"></StyledTableCell>
+            <StyledTableCell align="center">월</StyledTableCell>
+            <StyledTableCell align="center">화</StyledTableCell>
+            <StyledTableCell align="center">수</StyledTableCell>
+            <StyledTableCell align="center">목</StyledTableCell>
+            <StyledTableCell align="center">금</StyledTableCell>
+            <StyledTableCell align="center">토</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
-              <StyledTableCell align="center">{row.name}</StyledTableCell>
-              <StyledTableCell align="center">{row.calories}</StyledTableCell>
-              <StyledTableCell align="center">{row.fat}</StyledTableCell>
-              <StyledTableCell align="center">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="center">{row.protein}</StyledTableCell>
-              <StyledTableCell align="center">{row.protein}</StyledTableCell>
+          {TIME_LIST.map((time) => (
+            <StyledTableRow key={time}>
+              <StyledTableCell align="center">{time}</StyledTableCell>
+              <StyledTableCell align="center"></StyledTableCell>
+              <StyledTableCell align="center"></StyledTableCell>
+              <StyledTableCell align="center"></StyledTableCell>
+              <StyledTableCell align="center"></StyledTableCell>
+              <StyledTableCell align="center"></StyledTableCell>
+              <StyledTableCell align="center"></StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
@@ -59,6 +51,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
+    border: `1px solid ${theme.palette.divider}`,
   },
 }));
 
