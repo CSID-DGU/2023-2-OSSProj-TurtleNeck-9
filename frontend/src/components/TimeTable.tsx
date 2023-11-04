@@ -11,7 +11,8 @@ import { Box } from '@mui/material';
 import { FC } from 'react';
 
 const TIME_LIST = Array.from({ length: 14 }, (_, index) => index + 9);
-
+const HEIGHT = '40px';
+const WIDTH = '15%';
 const WEEKDAY_ORDER = {
   [Weekday.Mon]: 0,
   [Weekday.Tue]: 1,
@@ -25,7 +26,7 @@ type Props = {
   lectureList: Lecture[];
 };
 
-const TimeTable: FC<Props> = () => {
+const TimeTable: FC<Props> = ({ lectureList }) => {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -46,17 +47,17 @@ const TimeTable: FC<Props> = () => {
               <StyledTableCell width="10%" align="right" sx={{ paddingTop: 0 }}>
                 {time}
               </StyledTableCell>
-              <StyledTableCell width="15%" align="center"></StyledTableCell>
-              <StyledTableCell width="15%" align="center"></StyledTableCell>
-              <StyledTableCell width="15%" align="center"></StyledTableCell>
-              <StyledTableCell width="15%" align="center"></StyledTableCell>
-              <StyledTableCell width="15%" align="center"></StyledTableCell>
-              <StyledTableCell width="15%" align="center"></StyledTableCell>
+              <StyledTableCell width={WIDTH} align="center"></StyledTableCell>
+              <StyledTableCell width={WIDTH} align="center"></StyledTableCell>
+              <StyledTableCell width={WIDTH} align="center"></StyledTableCell>
+              <StyledTableCell width={WIDTH} align="center"></StyledTableCell>
+              <StyledTableCell width={WIDTH} align="center"></StyledTableCell>
+              <StyledTableCell width={WIDTH} align="center"></StyledTableCell>
             </StyledTableRow>
           ))}
-          <Box width={'15%'} height="40px" bgcolor="yellow" top={0} left="10%" position="absolute">
-            asdf
-          </Box>
+          {lectureList.map((lecture) => (
+            <LectureBox lecture={lecture} key={lecture.lectureId} />
+          ))}
         </TableBody>
       </Table>
     </TableContainer>
@@ -73,6 +74,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
     border: `1px solid ${theme.palette.divider}`,
+    height: HEIGHT,
   },
 }));
 
@@ -85,3 +87,26 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
+
+type LectureBoxProps = {
+  lecture: Lecture;
+};
+const LectureBox: FC<LectureBoxProps> = ({ lecture }) => {
+  return (
+    <>
+      {lecture.lectureTime.map((lectureTimeItem) => (
+        <Box
+          key={lectureTimeItem.weekday + lectureTimeItem.startTime}
+          width={WIDTH}
+          height={HEIGHT}
+          bgcolor="yellow"
+          top={0}
+          left="10%"
+          position="absolute"
+        >
+          asdf
+        </Box>
+      ))}
+    </>
+  );
+};
