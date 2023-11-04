@@ -6,10 +6,26 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Lecture, Weekday } from '../types/lecture';
+import { Box } from '@mui/material';
+import { FC } from 'react';
 
 const TIME_LIST = Array.from({ length: 14 }, (_, index) => index + 9);
 
-const TimeTable = () => {
+const WEEKDAY_ORDER = {
+  [Weekday.Mon]: 0,
+  [Weekday.Tue]: 1,
+  [Weekday.Wed]: 2,
+  [Weekday.Thu]: 3,
+  [Weekday.Fri]: 4,
+  [Weekday.Sat]: 5,
+};
+
+type Props = {
+  lectureList: Lecture[];
+};
+
+const TimeTable: FC<Props> = () => {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -24,18 +40,23 @@ const TimeTable = () => {
             <StyledTableCell align="center">토</StyledTableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody sx={{ position: 'relative' }}>
           {TIME_LIST.map((time) => (
             <StyledTableRow key={time}>
-              <StyledTableCell align="center">{time}</StyledTableCell>
-              <StyledTableCell align="center"></StyledTableCell>
-              <StyledTableCell align="center"></StyledTableCell>
-              <StyledTableCell align="center"></StyledTableCell>
-              <StyledTableCell align="center"></StyledTableCell>
-              <StyledTableCell align="center"></StyledTableCell>
-              <StyledTableCell align="center"></StyledTableCell>
+              <StyledTableCell width="10%" align="right" sx={{ paddingTop: 0 }}>
+                {time}
+              </StyledTableCell>
+              <StyledTableCell width="15%" align="center"></StyledTableCell>
+              <StyledTableCell width="15%" align="center"></StyledTableCell>
+              <StyledTableCell width="15%" align="center"></StyledTableCell>
+              <StyledTableCell width="15%" align="center"></StyledTableCell>
+              <StyledTableCell width="15%" align="center"></StyledTableCell>
+              <StyledTableCell width="15%" align="center"></StyledTableCell>
             </StyledTableRow>
           ))}
+          <Box width={'15%'} height="40px" bgcolor="yellow" top={0} left="10%" position="absolute">
+            asdf
+          </Box>
         </TableBody>
       </Table>
     </TableContainer>
