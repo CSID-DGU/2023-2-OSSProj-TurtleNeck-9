@@ -11,16 +11,8 @@ import { Box } from '@mui/material';
 import { FC } from 'react';
 
 const TIME_LIST = Array.from({ length: 14 }, (_, index) => index + 9);
-const HEIGHT = '40px';
+const HEIGHT = 40;
 const WIDTH = '15%';
-const WEEKDAY_ORDER = {
-  [Weekday.Mon]: 0,
-  [Weekday.Tue]: 1,
-  [Weekday.Wed]: 2,
-  [Weekday.Thu]: 3,
-  [Weekday.Fri]: 4,
-  [Weekday.Sat]: 5,
-};
 
 type Props = {
   lectureList: Lecture[];
@@ -28,7 +20,7 @@ type Props = {
 
 const TimeTable: FC<Props> = ({ lectureList }) => {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ position: 'relative' }}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
@@ -41,7 +33,7 @@ const TimeTable: FC<Props> = ({ lectureList }) => {
             <StyledTableCell align="center">토</StyledTableCell>
           </TableRow>
         </TableHead>
-        <TableBody sx={{ position: 'relative' }}>
+        <TableBody>
           {TIME_LIST.map((time) => (
             <StyledTableRow key={time}>
               <StyledTableCell width="10%" align="right" sx={{ paddingTop: 0 }}>
@@ -55,11 +47,11 @@ const TimeTable: FC<Props> = ({ lectureList }) => {
               <StyledTableCell width={WIDTH} align="center"></StyledTableCell>
             </StyledTableRow>
           ))}
-          {lectureList.map((lecture) => (
-            <LectureBox lecture={lecture} key={lecture.lectureId} />
-          ))}
         </TableBody>
       </Table>
+      {lectureList.map((lecture) => (
+        <LectureBox lecture={lecture} key={lecture.lectureId} />
+      ))}
     </TableContainer>
   );
 };
@@ -70,11 +62,13 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
+    height: `${HEIGHT}px`,
+    padding: 0,
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
     border: `1px solid ${theme.palette.divider}`,
-    height: HEIGHT,
+    height: `${HEIGHT}px`,
   },
 }));
 
@@ -88,6 +82,27 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+const WEEKDAY_ORDER = {
+  [Weekday.Mon]: 0,
+  [Weekday.Tue]: 1,
+  [Weekday.Wed]: 2,
+  [Weekday.Thu]: 3,
+  [Weekday.Fri]: 4,
+  [Weekday.Sat]: 5,
+};
+
+const resolveTop = (startTime: string) => {
+  const [hour, minute] = startTime.split(':').map(Number);
+
+  return HEIGHT + (hour - 9 + minute / 60) * HEIGHT + 'px';
+};
+
+const resolveHeight = (startTime: string, endTime: string) => {
+  const [startHour, startMinute] = startTime.split(':').map(Number);
+  const [endHour, endMinute] = endTime.split(':').map(Number);
+  return (endHour + endMinute / 60 - (startHour + startMinute / 60)) * HEIGHT;
+};
+
 type LectureBoxProps = {
   lecture: Lecture;
 };
@@ -98,9 +113,9 @@ const LectureBox: FC<LectureBoxProps> = ({ lecture }) => {
         <Box
           key={lectureTimeItem.weekday + lectureTimeItem.startTime}
           width={WIDTH}
-          height={HEIGHT}
+          height={resolveHeight(lectureTimeItem.startTime, lectureTimeItem.endTime)}
           bgcolor="yellow"
-          top={0}
+          top={resolveTop(lectureTimeItem.startTime)}
           left="10%"
           position="absolute"
         >
