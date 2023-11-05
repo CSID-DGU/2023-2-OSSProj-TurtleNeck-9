@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "jsx": "react-jsx",
+    "skipLibCheck": true
+  },
+  "include": [
+    "types/*.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.stories.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+}
