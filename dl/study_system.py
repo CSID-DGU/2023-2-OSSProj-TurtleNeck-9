@@ -101,8 +101,12 @@ class study_system:
         selected_subj_names=random.sample(subj_names,n)#n개 random 뽑기
         selected_subj_names=sorted(selected_subj_names)#정렬해서 sample 만들면, 좀 더 좋은 훈련 가능(이후에)
         selected_subj_nodes=[]
+#        print("오류예상노드 이름들(selected_subj_names) : ",selected_subj_names)
         for name in selected_subj_names:#id로 노드 하나씩 출력할 것
             selected_subj_nodes.append(self.search_by_id(self.head,self.name2id[name]))
+#        print("오류예상노드 이름들(selected_subj_nodes) :")
+#        for node in selected_subj_nodes:
+#            print(node.Subj_Name)
         return selected_subj_nodes
         #random_sampling에서 최종적으로 이 각 선택된 노드들로부터 선수과목이 내가 뽑은 sample에 있는지 조사 -> 없으면, 그거만 먼저 듣게 하거나, 동시에 듣게 할 것
 
