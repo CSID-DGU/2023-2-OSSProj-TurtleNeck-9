@@ -1,17 +1,13 @@
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
 
 @Entity
 @Getter @Setter
 public class Lecture {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(name="lecture_id")
     private Long id;
 
@@ -19,7 +15,12 @@ public class Lecture {
 
     private String place;
 
+    @ManyToOne
+    @JoinColumn(name="professor_id")
     private Professor professor;
+
+    @ManyToOne
+    @JoinColumn(name = "major_id")
     private Major major;
 
     private String firstDay;
