@@ -1,10 +1,12 @@
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import static jakarta.persistence.FetchType.LAZY;
 
-@Getter
 @Entity
+@Getter
+@Setter
 public class Professor {
     @Id
     @GeneratedValue
