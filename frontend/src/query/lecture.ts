@@ -11,10 +11,10 @@ const getLectureList = async () => {
   return response.data;
 };
 
-export const useLectureListQuery = (index: number) => {
+export const useLectureListQuery = (timeTableNumber: number) => {
   return useQuery({
     queryFn: getLectureList,
     queryKey: lectureKeys.list(),
-    select: (lectureList) => lectureList[index].lectures,
+    select: (lectureList) => lectureList[timeTableNumber - 1].lectures,
   });
 };

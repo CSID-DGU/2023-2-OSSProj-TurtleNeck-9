@@ -5,14 +5,14 @@ import TimeTable from '../../components/TimeTable';
 import { useLectureListQuery } from '../../query/lecture';
 
 const TimeTableDetail = () => {
-  const { timeTableIndex } = useParams();
-  const { data, isLoading } = useLectureListQuery(Number(timeTableIndex));
+  const { timeTableNumber } = useParams();
+  const { data, isSuccess } = useLectureListQuery(Number(timeTableNumber));
   return (
     <Container>
       <Header />
       <Box display="flex" minHeight="400px" justifyContent="space-around" flexDirection="column" alignItems="center">
         <Typography variant="h5">추천시간표 1</Typography>
-        {isLoading && data && <TimeTable lectureList={data} />}
+        {isSuccess && <TimeTable lectureList={data} />}
       </Box>
     </Container>
   );

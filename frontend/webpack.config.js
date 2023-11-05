@@ -5,14 +5,18 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: {
-    main: './src/index.tsx'
+    index: './src/index.tsx'
   },
   devtool: 'inline-source-map',
   devServer: {
     static: './dist',
+    historyApiFallback: true,
+    open: true
   },
   output: {
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: "/"
+    
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.jsx', '.js']

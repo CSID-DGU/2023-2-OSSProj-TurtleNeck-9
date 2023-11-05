@@ -6,8 +6,11 @@ import '@fontsource/roboto/700.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages';
 import TimeTableDetail from './pages/time-table';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const container = document.getElementById('root') as HTMLElement;
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -15,11 +18,15 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: '/time-table/:timeTableIndex',
+    path: '/time-table/:timeTableNumber',
     element: <TimeTableDetail />,
   },
 ]);
 
 const root = createRoot(container);
 
-root.render(<RouterProvider router={router} />);
+root.render(
+  <QueryClientProvider client={queryClient}>
+    <RouterProvider router={router} />
+  </QueryClientProvider>
+);
