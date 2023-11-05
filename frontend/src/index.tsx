@@ -5,6 +5,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages';
+import TimeTableDetail from './pages/time-table';
 
 const container = document.getElementById('root') as HTMLElement;
 
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Home />,
+  },
+  {
+    path: '/time-table/:timeTableIndex',
+    element: <TimeTableDetail />,
   },
 ]);
 
