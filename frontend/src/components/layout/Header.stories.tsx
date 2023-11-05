@@ -1,5 +1,5 @@
 import type { StoryObj } from '@storybook/react';
-import { mockLectures } from '../types/lecture';
+import { mockLectures } from '../../types/lecture';
 
 import Header from './Header';
 
