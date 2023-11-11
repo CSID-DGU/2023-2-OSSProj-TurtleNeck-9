@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
 
 @Entity
 @Getter
@@ -22,12 +21,18 @@ public class User {
     @Column(nullable = false, unique = false)
     private String username;
 
-    @OneToMany(mappedBy = "major", cascade = CascadeType.MERGE)
+    @ManyToOne
+    @JoinColumn(name = "major_id", nullable = false)
     private Major major;
 
     @Column(length = 100, nullable = false)
     private String password;
 
     @Builder
-    public User(int studentNumber, String username, String password)
+    public User(int studentNumber, Major major,String username, String password) {
+        this.studentNumber = studentNumber;
+        this.major = major;
+        this.username = username;
+        this.password = password;
+    }
 }
