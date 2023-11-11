@@ -8,14 +8,17 @@ import static jakarta.persistence.FetchType.LAZY;
 @Getter
 @Setter
 public class Professor {
+
     @Id
-    @GeneratedValue
-    @Column(name = "professor_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "professor_id", unique = true, nullable = false)
     private Long id;
 
+
+    @Column(length = 20, nullable = false)
     private String name;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "major_id")
+    @JoinColumn(name = "major_id", nullable = false)
     private Major major;
 }
