@@ -15,14 +15,14 @@ public class Major {
     private Long id;
 
     @Column(length = 20, nullable = false)
-    private String name;
+    private String professorName;
 
     @Column(length = 20, nullable = false)
     private String department;
 
     @Builder
-    public Major(String name, String department) {
-        this.name = name;
+    public Major(String professorName, String department) {
+        this.professorName = professorName;
         this.department = department;
     }
 }
