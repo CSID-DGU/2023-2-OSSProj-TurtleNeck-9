@@ -1,3 +1,6 @@
+package repository;
+
+import entity.User;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;

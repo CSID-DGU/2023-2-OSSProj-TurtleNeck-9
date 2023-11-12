@@ -1,3 +1,7 @@
+package entity;
+
+import entity.Major;
+import entity.Professor;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

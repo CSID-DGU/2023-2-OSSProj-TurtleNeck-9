@@ -1,3 +1,5 @@
+package entity;
+
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
