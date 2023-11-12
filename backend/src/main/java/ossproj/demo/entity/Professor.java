@@ -1,4 +1,5 @@
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,4 +23,10 @@ public class Professor {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "major_id", nullable = false)
     private Major major;
+
+    @Builder
+    public Professor(String name, Major major) {
+        this.name = name;
+        this.major = major;
+    }
 }
