@@ -1,18 +1,19 @@
+package ossproj.demo.entity;
+
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Entity
 @Getter
 @NoArgsConstructor
+@Entity(name = "major")
 public class Major {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "major_id", unique = true, nullable = false)
-    private Long id;
+    private Long majorId;
 
     @Column(length = 20, nullable = false)
     private String professorName;

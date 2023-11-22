@@ -1,13 +1,14 @@
-import jakarta.persistence.EntityManager;
-import lombok.RequiredArgsConstructor;
+package ossproj.demo.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import ossproj.demo.entity.Users;
+
+import java.util.Optional;
 
 @Repository
-@RequiredArgsConstructor
-public class UserRepository {
-    private final EntityManager em;
+public interface UserRepository extends JpaRepository<Users, Long> {
+    Optional<Users> findByUserId(Long id);
 
-    public void save(User user) {
-        em.persist(user);
-    }
+    Optional<Users> findByUsername(String username);
 }

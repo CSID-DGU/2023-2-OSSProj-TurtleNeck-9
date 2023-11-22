@@ -1,17 +1,18 @@
+package ossproj.demo.entity;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Entity
 @Getter
 @NoArgsConstructor
+@Entity(name="lectures")
 public class Lecture {
 
     @Id
     @GeneratedValue
     @Column(name="lecture_id", nullable = false)
-    private Long id;
+    private Long lectureId;
 
     @ManyToOne
     @JoinColumn(name="professor_id", nullable = false)

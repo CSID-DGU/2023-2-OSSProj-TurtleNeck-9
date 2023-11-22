@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "spring.jpa.ddl-auto",
+      "type": "java.lang.String",
+      "description": "Description for spring.jpa.ddl-auto."
+    },
+    {
+      "name": "spring.jpa.format_sql",
+      "type": "java.lang.String",
+      "description": "Description for spring.jpa.format_sql."
+    }
+  ] }
