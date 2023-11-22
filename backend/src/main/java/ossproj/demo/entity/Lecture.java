@@ -1,15 +1,12 @@
-package entity;
+package ossproj.demo.entity;
 
-import entity.Major;
-import entity.Professor;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Entity
 @Getter
 @NoArgsConstructor
+@Entity(name="lectures")
 public class Lecture {
 
     @Id
