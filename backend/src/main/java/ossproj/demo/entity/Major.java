@@ -14,7 +14,7 @@ public class Major {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "major_id", unique = true, nullable = false)
-    private Long id;
+    private Long majorId;
 
     @Column(length = 20, nullable = false)
     private String professorName;
