@@ -1,17 +1,16 @@
-package entity;
+package ossproj.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import lombok.Setter;
 
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "user")
-public class User {
+@Table(name = "users")
+public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", unique = true, nullable = false)
@@ -31,7 +30,7 @@ public class User {
     private String password;
 
     @Builder
-    public User(int studentNumber, Major major,String username, String password) {
+    public Users(int studentNumber, Major major, String username, String password) {
         this.studentNumber = studentNumber;
         this.major = major;
         this.username = username;
