@@ -1,16 +1,14 @@
-package repository;
+package ossproj.demo.repository;
 
-import entity.User;
-import jakarta.persistence.EntityManager;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import ossproj.demo.entity.Users;
 
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findByUserId(Long id);
+public interface UserRepository extends JpaRepository<Users, Long> {
+    Optional<Users> findByUserId(Long id);
 
-    Optional<User> findByUsername(String username);
+    Optional<Users> findByUsername(String username);
 }
