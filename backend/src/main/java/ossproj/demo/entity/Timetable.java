@@ -1,12 +1,12 @@
-package entity;
+package ossproj.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Getter
 @NoArgsConstructor
+@Entity(name = "timetables")
 public class Timetable {
 
     @Id
@@ -17,7 +17,7 @@ public class Timetable {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private Users user;
 
     @Column
     private int firstLectureId;
