@@ -1,8 +1,8 @@
-package service;
+package ossproj.demo.service;
 
-import entity.User;
 import org.springframework.stereotype.Service;
-import repository.UserRepository;
+import ossproj.demo.entity.Users;
+import ossproj.demo.repository.UserRepository;
 
 import java.util.Optional;
 
@@ -15,11 +15,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Optional<User> findByUserId(Long id) {
+    public Optional<Users> findByUserId(Long id) {
         return userRepository.findById(id);
     }
 
-    public Optional<User> findByUsername(String username) {
+    public Optional<Users> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 }
