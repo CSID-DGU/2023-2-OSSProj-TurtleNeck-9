@@ -6,7 +6,8 @@
 .DS_Store
 .AppleDouble
 .LSOverride
-
+application.yml
+application.properties
 # Icon must end with two \r
 Icon
 

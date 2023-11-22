@@ -15,7 +15,7 @@ public class Lecture {
     @Id
     @GeneratedValue
     @Column(name="lecture_id", nullable = false)
-    private Long id;
+    private Long lectureId;
 
     @ManyToOne
     @JoinColumn(name="professor_id", nullable = false)
