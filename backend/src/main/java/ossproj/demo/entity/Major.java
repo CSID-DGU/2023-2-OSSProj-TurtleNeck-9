@@ -1,14 +1,13 @@
-package entity;
+package ossproj.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Entity
 @Getter
 @NoArgsConstructor
+@Entity(name = "major")
 public class Major {
 
     @Id
