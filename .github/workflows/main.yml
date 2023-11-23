@@ -1,0 +1,15 @@
+name: "CI/CD"
+
+on:
+    push:
+        branches:
+            - main
+  	tags: 
+            - release.*
+
+jobs:
+    task:
+        runs-on: ubuntu-latest
+        steps:
+           - run: echo "build start %{{ github.repository }}"
+        
