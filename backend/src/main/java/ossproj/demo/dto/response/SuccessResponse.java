@@ -1,4 +1,4 @@
-package ossproj.demo.dto;
+package ossproj.demo.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
