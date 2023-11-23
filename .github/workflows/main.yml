@@ -44,7 +44,7 @@ jobs:
         distribution: 'temurin'
 
     - name: Build and Test with Maven
-      run: ./mvnw clean test
+      run: ./gradlew clean build
       working-directory: ./backend
 
   deploy:
