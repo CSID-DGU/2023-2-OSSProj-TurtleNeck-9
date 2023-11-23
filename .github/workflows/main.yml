@@ -8,26 +8,26 @@ on:
       - release.*
 
 jobs:
-#   build-and-test-frontend:
-#     name: Build and Test Frontend
-#     runs-on: ubuntu-latest
+  # build-and-test-frontend:
+  #   name: Build and Test Frontend
+  #   runs-on: ubuntu-latest
 
-#     steps:
-#     - name: Checkout Repository
-#       uses: actions/checkout@v4
+  #   steps:
+  #   - name: Checkout Repository
+  #     uses: actions/checkout@v4
 
-#     - name: Set up Node.js
-#       uses: actions/setup-node@v3
-#       with:
-#         node-version: '16'
+  #   - name: Set up Node.js
+  #     uses: actions/setup-node@v3
+  #     with:
+  #       node-version: '16'
 
-#     - name: Install Frontend Dependencies
-#       run: npm install
-#       working-directory: ./frontend
+  #   - name: Install Frontend Dependencies
+  #     run: npm install
+  #     working-directory: ./frontend
 
-#     - name: Run Frontend Tests
-#       run: npm test
-#       working-directory: ./frontend
+  #   - name: Run Frontend Tests
+  #     run: npm test
+  #     working-directory: ./frontend
 
   build-and-test-backend:
     name: Build and Test Backend
@@ -43,7 +43,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Build and Test with Maven
+    - name: Build and Test with Gradle
       run: ./gradlew clean build
       working-directory: ./backend
 
