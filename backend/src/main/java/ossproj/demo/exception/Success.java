@@ -11,7 +11,12 @@ public enum Success {
     /**
      * STATUS CODE : 200 OK
      */
-    GET_LECTURE_SUCCESS(HttpStatus.OK,"강의 조회 성공");
+    GET_LECTURE_SUCCESS(HttpStatus.OK,"강의 조회 성공"),
+
+    /**
+     * STATUS CODE : 201 OK
+     */
+    POST_SIGNUP_SUCCESS(HttpStatus.CREATED,"유저 생성 성공");
 
 
     private final HttpStatus httpStatus;

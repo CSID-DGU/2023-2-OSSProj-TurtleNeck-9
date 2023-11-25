@@ -9,5 +9,10 @@
       "name": "spring.jpa.format_sql",
       "type": "java.lang.String",
       "description": "Description for spring.jpa.format_sql."
+    },
+    {
+      "name": "spring.jwt.secret",
+      "type": "java.lang.String",
+      "description": "Description for spring.jwt.secret."
     }
   ] }

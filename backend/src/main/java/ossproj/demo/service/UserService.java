@@ -1,25 +1,11 @@
 package ossproj.demo.service;
 
-import org.springframework.stereotype.Service;
-import ossproj.demo.entity.Users;
-import ossproj.demo.repository.UserRepository;
+import ossproj.demo.dto.JwtToken;
+import ossproj.demo.dto.request.SignupRequest;
+import ossproj.demo.dto.response.SignupResponse;
 
-import java.util.Optional;
+public interface UserService {
+    JwtToken login(String studentId, String password);
 
-@Service
-public class UserService {
-
-    private final UserRepository userRepository;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    public Optional<Users> findByUserId(Long id) {
-        return userRepository.findById(id);
-    }
-
-    public Optional<Users> findByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
+    SignupResponse signup(SignupRequest signupRequest);
 }
