@@ -1,4 +1,4 @@
-package dto.response;
+package ossproj.demo.dto.response;
 
 public class LectureResponse {
 }
