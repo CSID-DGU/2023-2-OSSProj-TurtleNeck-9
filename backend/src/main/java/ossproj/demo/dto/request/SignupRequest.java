@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.userdetails.User;
 import ossproj.demo.entity.Major;
 import ossproj.demo.entity.Users;
 
@@ -20,7 +19,7 @@ public class SignupRequest {
     private String username;
     private Long major_id;
     private String password;
-    private List<String> roles = new ArrayList<>();
+    private final List<String> roles = new ArrayList<>();
 
     public Users toEntity(String encodedPassword, Major major,List<String> roles) {
         return Users.builder()
