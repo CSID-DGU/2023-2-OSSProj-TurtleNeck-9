@@ -201,7 +201,7 @@ class Recommend_LSTM(tf.keras.Model):
       sentences.append(sentence)
     return sentences
 
-#loaded_model_path = "C://Users//USER//OneDrive//바탕 화면//융합 소프트웨어//오픈소스소프트웨어프로젝트//팀프로젝트//OSSProj.ver2.0//dl//ClassRecommendModel"
+#loaded_model_path = "C://Users//USER//OneDrive//바탕 화면//융합 소프트웨어//오픈소스소프트웨어프로젝트//팀프로젝트//OSSProj.ver2.0//dl//ClassRecommendModel"#windows용 주소(windows는 permission error, decoding error 등이 남.)
 loaded_model_path = "/mnt/c/Users/USER/OneDrive/바탕 화면/융합 소프트웨어/오픈소스소프트웨어프로젝트/팀프로젝트/OSSProj.ver2.0/dl/ClassRecommendModel"#wsl 등 linux로 돌릴 때의 주소
 # 모델 불러오기 -> 다시 새 모델 만든 데다가 embedding_matrix등의 변수 넣어 기존 훈련된 모델 완성
 
