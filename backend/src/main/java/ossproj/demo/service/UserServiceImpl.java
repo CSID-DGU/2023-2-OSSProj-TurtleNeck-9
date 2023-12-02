@@ -34,14 +34,10 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     public JwtToken login(String studentId, String password) {
-        System.out.println("studentId = " + studentId);
-        System.out.println("password = " + password);
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(studentId, password);
-        System.out.println("authenticationToken = " + authenticationToken);
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
-        System.out.println("authentication = " + authentication);
         return jwtTokenProvider.generateToken(authentication);
     }
 
