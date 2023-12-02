@@ -6,9 +6,11 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-type Props = {};
+type Props = {
+  title: string;
+};
 
-export default function MediaCard() {
+const MediaCard = () => {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia sx={{ height: 140 }} image="/static/images/cards/contemplative-reptile.jpg" title="green iguana" />
@@ -27,4 +29,6 @@ export default function MediaCard() {
       </CardActions>
     </Card>
   );
-}
+};
+
+export default MediaCard;
