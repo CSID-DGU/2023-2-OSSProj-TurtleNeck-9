@@ -18,7 +18,7 @@ public class SignupResponse {
 
     static public SignupResponse toUser(Users user) {
         return SignupResponse.builder()
-                .userId(user.getUserId())
+                .userId(user.getId())
                 .studentId(user.getStudentId())
                 .majorId(user.getMajor().getMajorId())
                 .username(user.getUsername())
