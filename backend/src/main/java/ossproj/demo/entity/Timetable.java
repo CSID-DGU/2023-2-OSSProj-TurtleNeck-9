@@ -1,11 +1,13 @@
 package ossproj.demo.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "timetables")
 public class Timetable {
 
@@ -13,7 +15,6 @@ public class Timetable {
     @GeneratedValue
     @Column(name = "timetable_id", nullable = false)
     private Long id;
-
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -40,5 +41,12 @@ public class Timetable {
     @Column
     private int seventhLectureId;
 
+    @Column
+    private int eighthLectureId;
 
+    @Column
+    private int ninthLectureId;
+
+    @Column
+    private int tenthLectureId;
 }

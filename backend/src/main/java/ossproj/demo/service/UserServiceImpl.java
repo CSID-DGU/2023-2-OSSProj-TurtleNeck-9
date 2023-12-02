@@ -9,7 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ossproj.demo.dto.JwtToken;
-import ossproj.demo.dto.request.SignupRequest;
+import ossproj.demo.dto.request.auth.SignupRequest;
 import ossproj.demo.dto.response.SignupResponse;
 import ossproj.demo.entity.Major;
 import ossproj.demo.entity.Users;

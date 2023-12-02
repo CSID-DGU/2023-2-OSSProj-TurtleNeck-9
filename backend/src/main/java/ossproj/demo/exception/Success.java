@@ -12,6 +12,7 @@ public enum Success {
      * STATUS CODE : 200 OK
      */
     GET_LECTURE_SUCCESS(HttpStatus.OK,"강의 조회 성공"),
+    GET_TIMETABLE_SUCCESS(HttpStatus.OK,"시간표 조회 성공"),
 
     /**
      * STATUS CODE : 201 OK
