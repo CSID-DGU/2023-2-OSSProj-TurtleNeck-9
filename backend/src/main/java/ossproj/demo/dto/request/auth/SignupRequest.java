@@ -1,4 +1,4 @@
-package ossproj.demo.dto.request;
+package ossproj.demo.dto.request.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
