@@ -30,9 +30,8 @@ jobs:
           yarn build 
         shell: bash
         working-directory: ./frontend
-      - name: Install deps and Build
+      - name: Deployment to S3
         run: |
-          yarn install 
-          yarn build 
+          aws s3 sync ./dist s3://recommended-timetable
         shell: bash
         working-directory: ./frontend
