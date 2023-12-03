@@ -17,6 +17,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -30,6 +31,7 @@ jobs:
           yarn build 
         shell: bash
         working-directory: ./frontend
+        
       - name: Deployment to S3
         run: |
           aws s3 sync ./dist s3://recommended-timetable
