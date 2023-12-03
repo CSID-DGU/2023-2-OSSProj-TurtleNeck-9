@@ -1,8 +1,9 @@
 name: Frontend Deployment 
 
-on: push
-    # branches:
-    #   - main
+on: 
+  push:
+    branches:
+      - main
 
 jobs:
   deployment:
@@ -31,7 +32,7 @@ jobs:
           yarn build 
         shell: bash
         working-directory: ./frontend
-        
+
       - name: Deployment to S3
         run: |
           aws s3 sync ./dist s3://recommended-timetable
