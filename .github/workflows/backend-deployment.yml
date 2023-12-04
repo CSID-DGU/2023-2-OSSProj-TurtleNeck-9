@@ -31,6 +31,10 @@ jobs:
         working-directory: backend
         run: chmod +x ./gradlew
 
+      - name: Convert line endings of gradlew
+        working-directory: backend
+        run: sed -i 's/\r$//' ./gradlew
+
       - name: Build with Gradle
         working-directory: backend
         run: ./gradlew build
