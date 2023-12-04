@@ -1,0 +1,52 @@
+# workflow의 이름
+name: backend-CD
+
+# 해당 workflow가 언제 실행될 것인지에 대한 트리거를 지정
+on:
+  push:
+    branches: [ main ] # main branch로 push 될 때 실행됩니다.
+
+# 해당 yml 내에서 사용할 key - value
+env:
+  S3_BUCKET_NAME: dgu-timetable-bucket
+  PROJECT_NAME: dgu-timetable
+
+jobs:
+  build:
+    name: CD
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'corretto'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+        shell: bash
+
+      - name: Build with Gradle
+        run: ./gradlew build
+        shell: bash
+
+      - name: Make zip file
+        run: zip -r ./$GITHUB_SHA.zip .
+        shell: bash
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_S3_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_ACCESS_S3_SECRET }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      # script files 복사
+      - name: Copy script
+        run: cp ./scripts/*.sh ./deploy
+
+      # S3에 업로드
+      - name: Upload to S3
+        run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
