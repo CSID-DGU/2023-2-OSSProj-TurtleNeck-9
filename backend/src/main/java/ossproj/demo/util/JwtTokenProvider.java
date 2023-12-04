@@ -29,11 +29,9 @@ public class JwtTokenProvider {
     private final Key key;
 
     // application.yml에서 secret 값을 가져오고 key 저장
-    public JwtTokenProvider(@Value("${DB_SECRET}") String secretKey) {
-        System.out.println("secretKey = " + secretKey);
+    public JwtTokenProvider(@Value("${spring.jwt.secret}") String secretKey) {
         byte[] keyBytes = hexStringToByteArray(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
-        System.out.println("Key bytes: " + Arrays.toString(keyBytes));
     }
 
     /**

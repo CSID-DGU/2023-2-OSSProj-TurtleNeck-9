@@ -1,0 +1,40 @@
+name: Frontend Deployment 
+
+on: 
+  push:
+    branches:
+      - main
+
+jobs:
+  deployment:
+    name: Build 
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Install deps and Build
+        run: |
+          yarn install 
+          yarn build 
+        shell: bash
+        working-directory: ./frontend
+
+      - name: Deployment to S3
+        run: |
+          aws s3 sync ./dist s3://recommended-timetable
+        shell: bash
+        working-directory: ./frontend

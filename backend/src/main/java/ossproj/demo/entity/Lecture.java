@@ -14,9 +14,8 @@ public class Lecture {
     @Column(name="lecture_id", nullable = false)
     private Long lectureId;
 
-    @ManyToOne
-    @JoinColumn(name="professor_id", nullable = false)
-    private Professor professor;
+    @Column(length = 30, nullable = false)
+    private String professorName;
 
     @ManyToOne
     @JoinColumn(name = "major_id", nullable = false)
@@ -45,4 +44,9 @@ public class Lecture {
 
     @Column(length = 50)
     private String secondDayEndTime;
+
+    @Column(length = 100)
+    private String place;
+
+
 }
