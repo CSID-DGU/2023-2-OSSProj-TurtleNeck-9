@@ -2,7 +2,9 @@ name: backend-CD
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+      - feature/*
 
 env:
   S3_BUCKET_NAME: dgu-timetable-bucket
@@ -14,25 +16,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: current directory check
+        run: ls -a
+
       - name: Grant execute permission for gradlew
+        working-directory: backend
         run: chmod +x ./gradlew
-        working-directory: ./2023-2-OSSProj-TurtleNeck-9/backend
+
+      - name: Convert line endings of gradlew
+        working-directory: backend
+        run: sed -i 's/\r$//' ./gradlew
 
       - name: Build with Gradle
+        working-directory: backend
         run: ./gradlew build
-        working-directory: ./2023-2-OSSProj-TurtleNeck-9/backend
 
       - name: Make zip file
         run: zip -r ${GITHUB_SHA}.zip .
-        working-directory: ./2023-2-OSSProj-TurtleNeck-9/backend
         # Ensure the zip file contains only necessary files for deployment
 
       - name: Configure AWS credentials
@@ -45,11 +53,9 @@ jobs:
       # Copy script files
       - name: Copy script
         run: cp ./scripts/*.sh ./deploy
-        working-directory: ./2023-2-OSSProj-TurtleNeck-9/backend
         # Ensure the 'scripts' directory exists at this location
 
       # Upload to S3
       - name: Upload to S3
         run: aws s3 cp ./${GITHUB_SHA}.zip s3://${S3_BUCKET_NAME}/${PROJECT_NAME}/${GITHUB_SHA}.zip
-        working-directory: ./2023-2-OSSProj-TurtleNeck-9/backend
         # Ensure the 'deploy' directory
