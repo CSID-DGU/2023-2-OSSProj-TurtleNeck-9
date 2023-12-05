@@ -3,9 +3,17 @@ BUILD_JAR=$(ls /home/ec2-user/action/build/libs/*.jar)
 JAR_NAME=$(basename $BUILD_JAR)
 echo "> build 파일명: $JAR_NAME" >> /home/ec2-user/action/deploy.log
 
-echo "> build 파일 복사" >> /home/ec2-user/action/deploy.log
+#!/bin/bash
 DEPLOY_PATH=/home/ec2-user/action/
-cp $BUILD_JAR $DEPLOY_PATH
+
+echo "> 이전 빌드 파일 삭제" >> /home/ec2-user/action/deploy.log
+# 'demo-0.0.1-SNAPSHOT.jar'와 'demo-0.0.1-SNAPSHOT-plain.jar' 파일 삭제
+find $DEPLOY_PATH -type f \( -name "demo-0.0.1-SNAPSHOT.jar" -o -name "demo-0.0.1-SNAPSHOT-plain.jar" \) -exec rm {} \;
+
+echo "> build 파일 복사" >> /home/ec2-user/action/deploy.log
+# 새 빌드 파일 복사
+cp /path/to/your/demo-0.0.1-SNAPSHOT.jar $DEPLOY_PATH
+cp /path/to/your/demo-0.0.1-SNAPSHOT-plain.jar $DEPLOY_PATH
 
 echo "> 현재 실행중인 애플리케이션 pid 확인" >> /home/ec2-user/action/deploy.log
 CURRENT_PID=$(pgrep -f $JAR_NAME)
@@ -19,6 +27,6 @@ else
   sleep 5
 fi
 
-DEPLOY_JAR=$DEPLOY_PATH$JAR_NAME
+DEPLOY_JAR=$DEPLOY_PATH
 echo "> DEPLOY_JAR 배포"    >> /home/ec2-user/action/deploy.log
-nohup java -jar $DEPLOY_JAR >> /home/ec2-user/deploy.log 2>/home/ec2-user/action/deploy_err.log &
+nohup java -jar $DEPLOY_PATH/demo-0.0.1-SNAPSHOT.jar >> /home/ec2-user/deploy.log 2>/home/ec2-user/action/deploy_err.log &
