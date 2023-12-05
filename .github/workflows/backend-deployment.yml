@@ -57,5 +57,5 @@ jobs:
 
       # Upload to S3
       - name: Upload to S3
-        run: aws s3 cp ./dgu-timetable.zip s3://${S3_BUCKET_NAME}/${PROJECT_NAME}/${dgu-timetable.zip
+        run: aws s3 cp ./dgu-timetable.zip s3://${S3_BUCKET_NAME}/${PROJECT_NAME}/dgu-timetable.zip
         # Ensure the 'deploy' directory
