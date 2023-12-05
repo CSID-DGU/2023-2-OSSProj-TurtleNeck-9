@@ -1,15 +1,12 @@
 #!/bin/bash
 DEPLOY_PATH=/home/ubuntu/action/  # 배포 경로
 
-# 필요한 경우, 디렉토리 생성
-mkdir -p $DEPLOY_PATH
-
 # 이전 빌드 파일 삭제
 echo "> 이전 빌드 파일 삭제" >> $DEPLOY_PATH/deploy.log
-find $DEPLOY_PATH -type f \( -name "demo-0.0.1-SNAPSHOT.jar" -o -name "demo-0.0.1-SNAPSHOT-plain.jar" \) -exec rm {} \;
+find $DEPLOY_PATH -type f \( -name "dgu-timetable.jar" \) -exec rm {} \;
 
 # 새 빌드 파일의 경로 찾기
-BUILD_JAR=$(ls /home/ubuntu/2023-2-OSSProj-TurtleNeck-9/backend/build/libs/demo-0.0.1-SNAPSHOT.jar)
+BUILD_JAR=$(ls /home/ubuntu/2023-2-OSSProj-TurtleNeck-9/backend/build/libs/dgu-timetable.jar)
 JAR_NAME=$(basename $BUILD_JAR)
 echo "> build 파일명: $JAR_NAME" >> $DEPLOY_PATH/deploy.log
 
