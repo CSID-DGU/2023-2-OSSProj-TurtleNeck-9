@@ -39,3 +39,13 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+bootJar{
+	archivesBaseName = 'dgu-timetable'
+	archiveFileName = 'dgu-timetable.jar'
+	archiveVersion = "0.0.1"
+}
+
+jar {
+	enabled = false
+}

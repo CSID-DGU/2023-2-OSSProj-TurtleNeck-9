@@ -40,7 +40,7 @@ jobs:
         run: ./gradlew build
 
       - name: Make zip file
-        run: zip -r ${GITHUB_SHA}.zip .
+        run: zip -r dgu-timetable.zip .
         # Ensure the zip file contains only necessary files for deployment
 
       - name: Configure AWS credentials
@@ -57,5 +57,5 @@ jobs:
 
       # Upload to S3
       - name: Upload to S3
-        run: aws s3 cp ./${GITHUB_SHA}.zip s3://${S3_BUCKET_NAME}/${PROJECT_NAME}/${GITHUB_SHA}.zip
+        run: aws s3 cp ./dgu-timetable.zip s3://${S3_BUCKET_NAME}/${PROJECT_NAME}/dgu-timetable.zip
         # Ensure the 'deploy' directory
