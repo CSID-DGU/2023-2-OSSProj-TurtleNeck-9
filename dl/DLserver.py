@@ -17,7 +17,7 @@ def get_data():
 
     # Flattening the list of lists
     flattened_classes = sum(recommended_classes, [])
-    data = {"lecture": flattened_classes}
+    data = {"lectures": flattened_classes}
     json_content = json.dumps(data, indent=2, ensure_ascii=False)
     return json_content
 
