@@ -23,7 +23,8 @@ def get_data():
     
 
     id = 20180001#이 부분 본래 /users/login으로부터 id 받아와야됨.
-    #DB연동해서 
+    
+    #DB연동해서 로그인된 학생 id로 해당 행 불러오기
     student_info = fetch_row_by_id(id)
     #input_for_BeamSearch = student_info[]#기수강과목들을 1차원 행렬로 만들기(어떤 student인지에 따라 major도 같이 뽑아야됨.)
     #input_for_BeamSearch = [[input_for_BeamSearch]]
