@@ -24,7 +24,7 @@
 |[정지만](https://github.com/jjm2317)|                            [김성준](https://github.com/SeongJoon-K)                            |                  [황재영](https://github.com/hwangjy0913)                   |
 |산업시스템공학과|                                          산업시스템공학과                                           |                                   수학과                                    |
 |Frontend|                                           Backend                                           |                             Machine Learning                             |
-| |   AWS ec2, s3 기반 자동배포 및 빌드 구축  <br/>시간표 조회 구현, 로그인, 회원가입, <br/>Spring security JWT 인증인가   |         훈련 데이터 전처리, 모델 훈련 및 훈련 가중치 저장 <br/> ML 서버, 훈련 모델 생성 <br/> 예측 알고리즘 BeamSearch 구현            |
+| |   AWS ec2, s3 기반 자동배포 및 빌드 구축  <br/>시간표 조회 구현, 로그인, 회원가입, <br/>Spring security JWT 인증인가   |         훈련 데이터 전처리, <br/> 모델 훈련 및 훈련 가중치 저장 <br/> ML 서버, 훈련 모델 생성 <br/> 예측 알고리즘 BeamSearch 구현            |
 
 </div>
 
