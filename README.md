@@ -1,42 +1,118 @@
 # 2023-2-OSSProj-TurtleNeck-9
-오픈소스소프트웨어프로젝트 TEAM 거북목 repo.
 
-## 프로젝트명(Project Name)
+----
+2023-2 오픈소스소프트웨어프로젝트 
+9조 거북목의 레포지토리입니다.
 
-동국대학교 시간표 추천 시스템
+## 📌 프로젝트 주제
 
-## 팀원 소개(Team Member)
+---
+동국대학교 공과대학 시간표 추천 서비스
 
-<!-- ### Front-End
+## Team Detail
 
-| 이름   | 전공           | 학번   | E-mail |
-| ------ | -------------- | ------ | ---------------|
-| 정지만 | 산업시스템공학과     | 18학번 | wlaks2317@gmail.com |
+---
+<!--
+
+| 이름   | 전공           | E-mail |
+| ------ | -------------- | ------------------- |
+| 정지만 | 산업시스템공학과 | wlaks2317@gmail.com |
+| 김성준 | 산업시스템공학과 | jobcho6320@naver.com |
+| 황재영 | 수학과        | jaey0913@dongguk.edu | -->
+
+<div>
+
+|<img src="https://avatars.githubusercontent.com/u/67041750?v=4" width="80">|         <img src="https://avatars.githubusercontent.com/u/89504367?v=4" width="80">         | <img src="https://avatars.githubusercontent.com/hwangjy0913" width="80"> |
+|:---:|:-------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------:|
+|[정지만](https://github.com/jjm2317)|                            [김성준](https://github.com/SeongJoon-K)                            |                  [황재영](https://github.com/hwangjy0913)                   |
+|산업시스템공학과|                                          산업시스템공학과                                           |                                   수학과                                    |
+|Frontend|                                           Backend                                           |                             Machine Learning                             |
+| |   AWS ec2, s3 기반 자동배포 및 빌드 구축  <br/>시간표 조회 구현, 로그인, 회원가입, <br/>Spring security JWT 인증인가   |                     |
+
+</div>
+
+## ⌨️ 커밋 컨벤션 
+
+다음 컨벤션을 따릅니다.
+
+| 커밋 타입 | 설명                               |
+|-----------|----------------------------------|
+| `feat`    | 새로운 기능을 추가할 경우                   |
+| `fix`     | 버그를 고친 경우                        |
+| `style`   | 코드 포맷 변경, 세미 콜론 누락, 코드 수정이 없는 경우 |
+| `refactor`| 리팩토링 하는 경우                       |
+| `chore`   | 자잘한 수정 사항 반영                     |
+| `docs`    | 문서를 수정한 경우                       |
+| `test`    | 테스트 추가                           |
+## 🛠️ Tech Stack
+
+<div align=center>
+
+### ✔️Back-end
+  
+  <img src="https://img.shields.io/badge/amazon codedeploy-4479A1?style=for-the-badge&logo=amazon d&logoColor=white">
+  <img src="https://img.shields.io/badge/amazon ec2-FF9900?style=for-the-badge&logo=amazon ec2&logoColor=white">
+<img src="https://img.shields.io/badge/amazon rds-Fz1100?style=for-the-badge&logo=amazon rds&logoColor=white">
+<img src="https://img.shields.io/badge/amazon s3-569A31?style=for-the-badge&logo=amazon s3&logoColor=white">
+<img src="https://img.shields.io/badge/intellijidea-000000?style=for-the-badge&logo=IntelliJ&logoColor=white"><img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
+  <img src="https://img.shields.io/badge/fontawesome-528DD7?style=for-the-badge&logo=fontawesome&logoColor=white">
 
 
-### Back-end
+<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
+  <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+<img src="https://img.shields.io/badge/ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white">
 
-| 이름   | 전공           | 학번   | E-mail |
-| ------ | -------------- | ------ | -------------------|
-| 김성준 | 산업시스템공학과     | 17학번 | jobcho6320@naver.com |
-| 황재영 | 수학과     | 19학번 | jaey0913@dongguk.edu |
+### ✔️Frond-end
 
+  <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
+  <img src="https://img.shields.io/badge/css3-1572B6?style=for-the-badge&logo=css3&logoColor=white">
+  <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black">
 
-| 이름   | 전공           | 학번   | E-mail |
-| ------ | -------------- | ------ | -------------------|
-| 황재영 | 수학과     | 19학번 | jaey0913@dongguk.edu |-->
-
-
-|<img src="https://avatars.githubusercontent.com/u/67041750?v=4" width="80">|<img src="https://avatars.githubusercontent.com/u/89504367?v=4" width="80">|<img src="https://avatars.githubusercontent.com/hwangjy0913" width="80">|
-|:---:|:---:|:---:|
-|[정지만](https://github.com/jjm2317)|[김성준](https://github.com/SeongJoon-K)|[황재영](https://github.com/hwangjy0913)|
-|산업시스템공학과|산업시스템공학과|수학과|
-|Frontend|Backend|Backend,DL|
-|FE : <br> |BE : <br> |BE : <br> DL : |
+  <img src="https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=purple"><img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=Next.js&logoColor=white">
 
 
+### ✔️ ML
 
-## 커밋 컨벤션 
+</div>
 
-다음 컨벤션을 따릅니다. 
-- https://www.conventionalcommits.org/en/v1.0.0/
+## 💻 개발 환경
+
+### OS
+
+- Ubuntu 22.04 LTS
+
+### Backend
+- Java 17 (Corretto 17)
+- Spring Boot v3.1.4
+- MySQL 8.0.33
+- Intellij
+- Gradle v8.3
+
+### Frontend
+- HTML5, CSS, JavaScript
+- React 
+- BootStrap v5.2
+- Visual Studio Code v1.78.2
+
+### Storage
+- AWS RDS t3.micro
+- AWS S3
+
+
+## 📌 프로젝트 내용 (Description)
+
+---
+동국대학교 공과대학 시간표 추천시스템을 통해서 학생들의 기존 수강 과목을 기반하여, 전공 과목간의 연속성을 확보
+전공별로 진로 분야가 다른 공과대학 학생들의 학업 성취도 고취 및 취업 시장에서의 경쟁력을 확보할 수 있도록 함.
+
+###  사용한 오픈소스 라이브러리 
+
+
+### 환경 설정 및 실행 CLI
+
+
+## License
+
+---
+해당 프로젝트는 MIT License를 따릅니다.
