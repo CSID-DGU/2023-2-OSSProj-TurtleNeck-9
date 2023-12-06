@@ -10,12 +10,10 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences#문장 패딩�
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-import h5py
-
 #vocab_size = len(self.vocab2idx) + 1
 excel_address='/content/drive/MyDrive/융소_ossp_수강추천시스템DL/OSSProj_DL_sign-up-course/sample_classes.xlsx'
 class Recommend_LSTM(tf.keras.Model):
-  def __init__(self, vocab_size,embedding_matrix , hidden_size=8, embedding_dimension=16):
+  def __init__(self, vocab_size,embedding_matrix , hidden_size=16, embedding_dimension=8):
     super(Recommend_LSTM, self).__init__()
     self.embedding_layer = Embedding(input_dim=vocab_size, output_dim=embedding_dimension,weights=[embedding_matrix])
     self.lstm = LSTM(units=hidden_size, return_sequences=True, return_state=True)
@@ -64,9 +62,9 @@ class Recommend_LSTM(tf.keras.Model):
     def __init__(self, word, probability, prev_node, next_nodes, num_layer):
       self.word = word
       if num_layer==0 or type(prev_node) == list or type(prev_node) == type(None):#self.head는 num_layer=0, prev_node=None임 / self.tail만 self.tail.prev_node를 list로 하여 노드 객체 리스트로 여러 노드를 저장하기 때문 -> 이 if문은 현재 생성되는 노드가 head or tail임을 검사한다.
-        print("현재 생성되는 노드는 head or tail이다.")
+        #print("현재 생성되는 노드는 head or tail이다.")
         self.probability = -tf.math.log(probability)
-        print("{}의 probability : {}, -tf.math.log(probability) : {},누적확률 : {}".format(self.word,probability,-tf.math.log(probability),self.probability))
+        #print("{}의 probability : {}, -tf.math.log(probability) : {},누적확률 : {}".format(self.word,probability,-tf.math.log(probability),self.probability))
 
       else:#실제 과목을 저장하고 있는 노드
         self.probability=prev_node.probability-tf.math.log(probability)
@@ -74,7 +72,7 @@ class Recommend_LSTM(tf.keras.Model):
       self.next_nodes = next_nodes#이 노드 객체의 word로부터 딥러닝 모델을 거처 예상된 k개의 후보 단어들을 저장할 각각의 노드들로, list에 노드들이 각각 들어갈 것임
       self.num_layer = num_layer#이 노드가 몇 번째 layer에 있는지 의미(int임)
 
-  def BeamSearch(self,taken_classes,num_class=5,beam_size=3):
+  def BeamSearch(self,taken_classes,num_class=10,beam_size=2):
     self.head = self.Node(word="head",probability=1.0,prev_node=None,next_nodes=None,num_layer=0);self.tail=self.Node("tail",1.0,prev_node=list([]),next_nodes=None,num_layer=num_class)
     self.head.next_nodes=self.tail
     #첫번째 예측 단어들의 확률 계산
@@ -82,39 +80,38 @@ class Recommend_LSTM(tf.keras.Model):
     taken_classes = taken_classes[0]
     encoded_data = [[self.vocab2idx[word] for word in taken_classes]]
     encoded_data = tf.constant(encoded_data)
-    print("정수 인코딩된 기수강 과목들(encoded_data)의 shape = \n",encoded_data.shape)#(2차원 텐서(즉 행렬)여야 한다! -> 그래야 embedding_layer지나면, 3차원이 되어 lstm을 문제없이 지나니까)
+    #print("정수 인코딩된 기수강 과목들(encoded_data)의 shape = \n",encoded_data.shape)#(2차원 텐서(즉 행렬)여야 한다! -> 그래야 embedding_layer지나면, 3차원이 되어 lstm을 문제없이 지나니까)
     X = self.embedding_layer(encoded_data)
-    print("lstm 입력될 텐서 shape(X) = ",X.shape)
+    #print("lstm 입력될 텐서 shape(X) = ",X.shape)
     hidden_states, last_hidden_state, last_cell_state = self.lstm(X)
     initial_state = [last_hidden_state, last_cell_state]
     probabilities = self.dense(last_hidden_state)
-    print("last_hidden_state의 shape = (1,vocab_size+1)이어야됨. \n",last_hidden_state.shape)
+    #print("last_hidden_state의 shape = (1,vocab_size+1)이어야됨. \n",last_hidden_state.shape)
     probabilities = tf.squeeze(probabilities)
     #가장 확률 큰 beamsize개의 예측 단어 찾아 각각 노드에 저장 and head와 연결
     sorted_indices = tf.argsort(probabilities,axis=0,direction="DESCENDING")
     top_k_indices = sorted_indices[:beam_size]
     top_k_indices = top_k_indices.numpy().tolist()
-    print(top_k_indices)
-    for index in top_k_indices:
-      print(self.idx2vocab[index])
+    #print(top_k_indices)
+
     words = [self.idx2vocab[index] for index in top_k_indices]#첫번째 예상 단어 후보 리스트
-    print("첫번째 예상 단어 후보 리스트 : ",words)
+    #print("첫번째 예상 단어 후보 리스트 : ",words)
     probabilities_of_words = [probabilities[index] for index in top_k_indices]
-    print("첫번째 예상 단어 후보 각각에 대응되는 확률 리스트: ",probabilities_of_words)
+    #print("첫번째 예상 단어 후보 각각에 대응되는 확률 리스트: ",probabilities_of_words)
     #노드에 저장 및 head와 연결
     words_nodes = self.insert(words,probabilities_of_words,self.head,num_layer=1)
 
-    print("word_nodes = ",words_nodes)
+    #print("word_nodes = ",words_nodes)
     #각 첫번째 예측 단어 후보들(words_nodes들의 원소(노드)들)로부터 똑같이 후보 예측 and 현재 노드(words_nodes의 원소)에 연결
     i=0
     for word_node in words_nodes:
       i+=1
-      print("{}번 째".format(i))
-      print("word_node = ",word_node)
+      #print("{}번 째".format(i))
+      #print("word_node = ",word_node)
       self.predict(word_node,initial_state,beam_size)
 
     #후보 path(추천 과목 모음)들 찾기(num_path만큼)
-    sentences = self.search_max_prob_nodes(self.tail,num_path=10)
+    sentences = self.search_max_prob_nodes(self.tail,num_path=1)
 
     #예측까지 다 했으면, self.head, self.tail 초기화
     self.head = self.Node(word="head",probability=1.0,prev_node=None,next_nodes=None,num_layer=0);self.tail=self.Node("tail",1.0,prev_node=list([]),next_nodes=None,num_layer=self.num_class)
@@ -153,16 +150,16 @@ class Recommend_LSTM(tf.keras.Model):
     return present_node.next_nodes#여기서 방금 예측된 단어들로부터 만들어진 노드들의 list를 return
 
   def predict(self,word_node,initial_state,beam_size):
-    print("word_node.word = ",word_node.word)
+    #print("word_node.word = ",word_node.word)
     word = word_node.word
     encoded_word = tf.constant([[self.vocab2idx[word]]])
     embedded_vector = self.embedding_layer(encoded_word)
-    print("lstm에 들어갈 tensor(embedded_vector) shape = \n",embedded_vector.shape)#(1,1,emb_size)여야 됨!
+    #print("lstm에 들어갈 tensor(embedded_vector) shape = \n",embedded_vector.shape)#(1,1,emb_size)여야 됨!
     hidden_states,last_hidden_state,last_cell_state = self.lstm(embedded_vector,initial_state=initial_state)
     initial_state=[last_hidden_state,last_cell_state]
     Y=self.dense(last_hidden_state)
-    print("예측된 확률 벡터 Y의 shape((1,vocab_size+1(pad, end 포함됨.)))",Y.shape)
-    print("idx2vocab 크기(위의 Y의 각 행의 크기와 동일해야 함) : ",len(self.idx2vocab))
+    #print("예측된 확률 벡터 Y의 shape((1,vocab_size+1(pad, end 포함됨.)))",Y.shape)
+    #print("idx2vocab 크기(위의 Y의 각 행의 크기와 동일해야 함) : ",len(self.idx2vocab))
     Y=tf.squeeze(Y)
     sorted_indices = tf.argsort(Y,axis=0,direction = "DESCENDING")
     top_k_indices = sorted_indices[:beam_size]
@@ -178,11 +175,11 @@ class Recommend_LSTM(tf.keras.Model):
         continue
       self.predict(next_words_nodes[i],initial_state=initial_state,beam_size=beam_size)
 
-  def search_max_prob_nodes(self,node,num_path =10):#__call__에서 node = self.tail로 뒀음!!!
+  def search_max_prob_nodes(self,node,num_path =1):#__call__에서 node = self.tail로 뒀음!!!
     prob_list = [prev_node.probability.numpy() for prev_node in node.prev_node]#사실 node=self.tail!(즉, tail은 모든 path와 연결되어 있으니, 그걸 이용!)(각 index에는 tail.prev_node의 같은 index의 node의 probability가 저장됨.)
-    print("prob_list = ",prob_list)
+    #print("prob_list = ",prob_list)
     paths_probabilities = tf.constant(prob_list)
-    print("paths_probabilitie의 shape(1차원 tensor이어야 함!) = ",paths_probabilities.shape)
+    #print("paths_probabilitie의 shape(1차원 tensor이어야 함!) = ",paths_probabilities.shape)
     sorted_indices_of_paths = tf.argsort(paths_probabilities,axis=0,direction = "ASCENDING")#노드에 저장된 probability는 축적된 확률로, -ln을 씌웠기에, 확률이 클수록, probability값은 작아지기에 오름차순으로 index를 정렬했음
     #num_path개의 후보 path를 뽑기
     top_k_indices = sorted_indices_of_paths[:num_path]
@@ -209,11 +206,11 @@ loaded_model = tf.keras.models.load_model(loaded_model_path,custom_objects={'Rec
 
 
 model_config = loaded_model.get_config()
-
+"""
 # Print or use the saved variables
 print(model_config)
 print(model_config.keys())
-
+"""
 
 #기존 훈련된 모델 완성시키기(class_recommendation은 전혀 훈련 안 되어 있으니, 훈련된 가중치 넣기)
 #1. 훈련 안된 모델 객체 생성 후, 객체 변수 넣기
@@ -231,5 +228,12 @@ lstm_weights = [tf.constant(model_config['lstm_weight0']),tf.constant(model_conf
 class_recommendation.dense.set_weights(dense_weights)
 class_recommendation.lstm.set_weights(lstm_weights)
 
-recommended_classes = class_recommendation.BeamSearch([["전자전기공학","어드벤처디자인","c언어및자료구조","회로이론1","객체지향프로그래밍"]], num_class=5, beam_size=3)
+#BeamSearch 실사용 연습
+recommended_classes = class_recommendation.BeamSearch([["전자전기공학과","어드벤처디자인","신호및시스템","회로이론1","전기회로실험","디지털실험"]])#여섯개~7개정도 들었을 때, 잘 예측하는 듯
 print(recommended_classes)
+
+recommended_classes = class_recommendation.BeamSearch([["산업시스템공학과","산업시스템공학의이해","산업시스템프로그래밍1","응용통계학","경영과학1","데이터분석입문"]])#여섯개~7개정도 들었을 때, 잘 예측하는 듯
+print(recommended_classes)
+
+recommended_classes = class_recommendation.BeamSearch([["정보통신공학과","ict와소프트웨어","어드벤처디자인","정보통신프로그래밍","정보통신수학및실습","객체지향언어와실습"]])#여섯개~7개정도 들었을 때, 잘 예측하는 듯
+print(recommended_classes)#산시, 전전은 잘 먹히는데, 정통은 왜? 그리고, 영어는 모두 대문자가 아닌 소문자 사용하기!
