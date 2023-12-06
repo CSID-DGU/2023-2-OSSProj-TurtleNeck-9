@@ -70,6 +70,8 @@
 
 
 ### ✔️ ML
+  <img src="https://img.shields.io/badge/tensorflow-black?logo=tensorflow">
+
 
 </div>
 
