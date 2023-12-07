@@ -25,12 +25,12 @@ public class AlreadyLectureService {
 
         AlreadyLecture generateAlreadyLecture = AlreadyLecture.builder()
                 .user(user)
-                .alFirstId(saveRequest.getAlFirstId())
-                .alSecondId(saveRequest.getAlSecondId())
-                .alThirdId(saveRequest.getAlThirdId())
-                .alFourthId(saveRequest.getAlFourthId())
-                .alFifthId(saveRequest.getAlFifthId())
-                .alSixthId(saveRequest.getAlSixthId())
+                .alFirstLectureName(saveRequest.getAlFirstLectureName())
+                .alSecondLectureName(saveRequest.getAlSecondLectureName())
+                .alThirdLectureName(saveRequest.getAlThirdLectureName())
+                .alFourthLectureName(saveRequest.getAlFourthLectureName())
+                .alFifthLectureName(saveRequest.getAlFifthLectureName())
+                .alSixthLectureName(saveRequest.getAlSixthLectureName())
                 .build();
 
         return alreadyLectureRepository.save(generateAlreadyLecture);

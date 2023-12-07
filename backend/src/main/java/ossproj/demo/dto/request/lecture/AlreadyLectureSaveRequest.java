@@ -10,10 +10,10 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class AlreadyLectureSaveRequest {
-    private int alFirstId;
-    private int alSecondId;
-    private int alThirdId;
-    private int alFourthId;
-    private int alFifthId;
-    private int alSixthId;
+    private String alFirstLectureName;
+    private String alSecondLectureName;
+    private String alThirdLectureName;
+    private String alFourthLectureName;
+    private String alFifthLectureName;
+    private String alSixthLectureName;
 }
