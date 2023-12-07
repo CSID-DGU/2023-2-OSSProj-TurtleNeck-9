@@ -1,14 +1,12 @@
 import {
   Button,
-  Checkbox,
   Container,
-  CssBaseline,
   FormControl,
-  FormControlLabel,
   Grid,
   InputLabel,
   MenuItem,
   Select,
+  SelectChangeEvent,
   TextField,
   Typography,
 } from '@mui/material';
@@ -18,7 +16,10 @@ import ResponsiveDrawer from '../../components/ResponsiveDrawer';
 
 const Signup = () => {
   const [majorId, setMajorId] = useState<number>();
-  const handleMajorSelectChange = () => {};
+  const handleMajorSelectChange = (e: SelectChangeEvent) => {
+    const value = e.target.value;
+    setMajorId(Number(value));
+  };
   return (
     <Container>
       <ResponsiveDrawer>
