@@ -228,12 +228,13 @@ lstm_weights = [tf.constant(model_config['lstm_weight0']),tf.constant(model_conf
 class_recommendation.dense.set_weights(dense_weights)
 class_recommendation.lstm.set_weights(lstm_weights)
 
+
 #BeamSearch 실사용 연습
-recommended_classes = class_recommendation.BeamSearch([["전자전기공학과","어드벤처디자인","신호및시스템","회로이론1","전기회로실험","디지털실험"]])#여섯개~7개정도 들었을 때, 잘 예측하는 듯
+recommended_classes = class_recommendation.BeamSearch([["전자전기공학과","어드벤처디자인","전자기학1","물리전자공학1","c언어및자료구조","디지털공학","전기회로실험"]])#여섯개~7개정도 들었을 때, 잘 예측하는 듯
 print(recommended_classes)
 
-recommended_classes = class_recommendation.BeamSearch([["산업시스템공학과","산업시스템공학의이해","산업시스템프로그래밍1","응용통계학","경영과학1","데이터분석입문"]])#여섯개~7개정도 들었을 때, 잘 예측하는 듯
+recommended_classes = class_recommendation.BeamSearch([["산업시스템공학과","산업시스템공학의이해","어드벤처디자인","산업시스템프로그래밍1","응용통계학","인간공학","생산및운영관리"]])#여섯개~7개정도 들었을 때, 잘 예측하는 듯
 print(recommended_classes)
 
-recommended_classes = class_recommendation.BeamSearch([["정보통신공학과","ict와소프트웨어","어드벤처디자인","정보통신프로그래밍","정보통신수학및실습","객체지향언어와실습"]])#여섯개~7개정도 들었을 때, 잘 예측하는 듯
-print(recommended_classes)#산시, 전전은 잘 먹히는데, 정통은 왜? 그리고, 영어는 모두 대문자가 아닌 소문자 사용하기!
+recommended_classes = class_recommendation.BeamSearch([["정보통신공학과","ict와소프트웨어","어드벤처디자인","정보통신프로그래밍","자료구조와실습","정보통신수학및실습","객체지향언어와실습"]])#여섯개~7개정도 들었을 때, 잘 예측하는 듯
+print(recommended_classes)# 그리고, 영어는 모두 대문자가 아닌 소문자 사용하기!
