@@ -4,11 +4,12 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import ossproj.demo.dto.response.AlreadyLectureSaveResponse;
 
 @Getter
 @NoArgsConstructor
 @Entity(name="already_lectures")
-public class AlreadyLecture {
+public class AlreadyLecture extends AlreadyLectureSaveResponse {
 
     @Id
     @GeneratedValue
