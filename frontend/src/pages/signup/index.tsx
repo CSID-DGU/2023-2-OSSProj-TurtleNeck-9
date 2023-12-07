@@ -1,24 +1,11 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  CssBaseline,
-  FormControlLabel,
-  Grid,
-  TextField,
-  Typography,
-} from '@mui/material';
-import { Link, useParams } from 'react-router-dom';
+import { Button, Checkbox, Container, CssBaseline, FormControlLabel, Grid, TextField, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 import ResponsiveDrawer from '../../components/ResponsiveDrawer';
-import { useLectureListQuery } from '../../query/lecture';
 
 const Signup = () => {
   return (
     <Container>
       <ResponsiveDrawer>
-        <CssBaseline />
         <div>
           <Typography>회원가입</Typography>
           <form noValidate>
@@ -76,7 +63,7 @@ const Signup = () => {
                 />
               </Grid>
             </Grid>
-            <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
+            <Button type="submit" fullWidth variant="contained" color="primary">
               Sign Up
             </Button>
             <Grid container>
