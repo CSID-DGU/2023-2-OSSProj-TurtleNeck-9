@@ -21,32 +21,32 @@ public class AlreadyLecture extends AlreadyLectureSaveResponse {
     private Users user;
 
     @Column(nullable = false)
-    private int alFirstId;
+    private String alFirstLectureName;
 
     @Column(nullable = false)
-    private int alSecondId;
+    private String alSecondLectureName;
 
     @Column(nullable = false)
-    private int alThirdId;
+    private String alThirdLectureName;
 
     @Column(nullable = false)
-    private int alFourthId;
+    private String alFourthLectureName;
 
     @Column(nullable = false)
-    private int alFifthId;
+    private String alFifthLectureName;
 
     @Column(nullable = false)
-    private int alSixthId;
+    private String alSixthLectureName;
 
 
     @Builder
-    public AlreadyLecture(Users user, int alFirstId, int alSecondId, int alThirdId, int alFourthId, int alFifthId, int alSixthId) {
+    public AlreadyLecture(Users user, String alFirstLectureName, String alSecondLectureName, String alThirdLectureName, String alFourthLectureName, String alFifthLectureName, String alSixthLectureName) {
         this.user = user;
-        this.alFirstId = alFirstId;
-        this.alSecondId = alSecondId;
-        this.alThirdId = alThirdId;
-        this.alFourthId = alFourthId;
-        this.alFifthId = alFifthId;
-        this.alSixthId = alSixthId;
+        this.alFirstLectureName = alFirstLectureName;
+        this.alSecondLectureName = alSecondLectureName;
+        this.alThirdLectureName = alThirdLectureName;
+        this.alFourthLectureName = alFourthLectureName;
+        this.alFifthLectureName = alFifthLectureName;
+        this.alSixthLectureName = alSixthLectureName;
     }
 }
