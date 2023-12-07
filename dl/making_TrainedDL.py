@@ -11,7 +11,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 #vocab_size = len(self.vocab2idx) + 1
-excel_address='/content/drive/MyDrive/융소_ossp_수강추천시스템DL/OSSProj_DL_sign-up-course/sample_classes.xlsx'
+#excel_address='/content/drive/MyDrive/융소_ossp_수강추천시스템DL/OSSProj_DL_sign-up-course/sample_classes.xlsx'
 class Recommend_LSTM(tf.keras.Model):
   def __init__(self, vocab_size,embedding_matrix , hidden_size=16, embedding_dimension=8):
     super(Recommend_LSTM, self).__init__()
@@ -199,7 +199,7 @@ class Recommend_LSTM(tf.keras.Model):
     return sentences
 
 #loaded_model_path = "C://Users//USER//OneDrive//바탕 화면//융합 소프트웨어//오픈소스소프트웨어프로젝트//팀프로젝트//OSSProj.ver2.0//dl//ClassRecommendModel"#windows용 주소(windows는 permission error, decoding error 등이 남.)
-loaded_model_path = "/mnt/c/Users/USER/OneDrive/바탕 화면/융합 소프트웨어/오픈소스소프트웨어프로젝트/팀프로젝트/OSSProj.ver2.0/dl/ClassRecommendModel"#wsl 등 linux로 돌릴 때의 주소
+loaded_model_path = "./dl/ClassRecommendModel"#wsl 등 linux로 돌릴 때의 주소
 # 모델 불러오기 -> 다시 새 모델 만든 데다가 embedding_matrix등의 변수 넣어 기존 훈련된 모델 완성
 
 loaded_model = tf.keras.models.load_model(loaded_model_path,custom_objects={'Recommend_LSTM': Recommend_LSTM})#이 방식으로는 binary file을 utf-8 decoding 못해서 고쳤음.
@@ -228,7 +228,7 @@ lstm_weights = [tf.constant(model_config['lstm_weight0']),tf.constant(model_conf
 class_recommendation.dense.set_weights(dense_weights)
 class_recommendation.lstm.set_weights(lstm_weights)
 
-
+"""
 #BeamSearch 실사용 연습
 recommended_classes = class_recommendation.BeamSearch([["전자전기공학과","어드벤처디자인","전자기학1","물리전자공학1","c언어및자료구조","디지털공학","전기회로실험"]])#여섯개~7개정도 들었을 때, 잘 예측하는 듯
 print(recommended_classes)
@@ -238,3 +238,4 @@ print(recommended_classes)
 
 recommended_classes = class_recommendation.BeamSearch([["정보통신공학과","ict와소프트웨어","어드벤처디자인","정보통신프로그래밍","자료구조와실습","정보통신수학및실습","객체지향언어와실습"]])#여섯개~7개정도 들었을 때, 잘 예측하는 듯
 print(recommended_classes)# 그리고, 영어는 모두 대문자가 아닌 소문자 사용하기!
+"""
