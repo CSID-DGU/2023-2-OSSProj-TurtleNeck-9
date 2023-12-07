@@ -16,12 +16,12 @@ public class AlreadyLectureController {
     private final AlreadyLectureService alreadyLectureService;
 
     @PostMapping("/{userId}")
-    public SuccessResponse<AlreadyLectureSaveResponse> saveUserAlreadyLectures(
+    public SuccessResponse saveUserAlreadyLectures(
             @PathVariable Long userId,
             @RequestBody AlreadyLectureSaveRequest saveRequest
             ) {
         AlreadyLectureSaveResponse alreadyLectureSaveResponse = alreadyLectureService.saveUserAlreadyLecture(userId, saveRequest);
-        return SuccessResponse.success(Success.POST_ALREADYLECTURES_SUCCESS, alreadyLectureSaveResponse);
+        return SuccessResponse.success(Success.POST_ALREADYLECTURES_SUCCESS,"");
     }
 
 }
