@@ -19,6 +19,7 @@ const Signup = () => {
   const [majorId, setMajorId] = useState<number>();
   const { mutate: signup } = useSignupMutation();
   const [username, setUsername] = useState('');
+  const [studentId, setStudentId] = useState<number>();
   const handleMajorSelectChange = (e: SelectChangeEvent) => {
     const value = e.target.value;
     setMajorId(Number(value));
@@ -27,6 +28,10 @@ const Signup = () => {
   const handleUsernameChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.target.value;
     setUsername(value);
+  };
+  const handleStudentIdChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const value = e.target.value;
+    setStudentId(Number(value));
   };
   return (
     <Container>
@@ -50,7 +55,17 @@ const Signup = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField variant="outlined" required fullWidth id="majorId" label="학번" name="majorId" />
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="studentId"
+                  label="학번"
+                  name="studentId"
+                  value={studentId}
+                  onChange={handleStudentIdChange}
+                  type="number"
+                />
               </Grid>
               <Grid item xs={12}>
                 <FormControl fullWidth>
