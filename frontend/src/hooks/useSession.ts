@@ -23,7 +23,7 @@ export const useSession = () => {
 
   useEffect(() => {
     if (token) {
-      axios.defaults.headers.common['Authorization'] = token;
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
     }
   }, [token]);
 

@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import ResponsiveDrawer from '../../components/ResponsiveDrawer';
 import { useSession } from '../../hooks/useSession';
 import { useSigninMutation } from '../../query/auth';
+import { setCookie } from '../../utils/cookie';
 
 const Signin = () => {
   const { mutate: signin } = useSigninMutation();
@@ -27,6 +28,8 @@ const Signin = () => {
       {
         onSuccess: (data) => {
           signinClient(data.accessToken);
+          // 백엔드 인증 구현 이슈로 임시 하드코딩
+          setCookie('studentId', studentId, 10000000000);
           navigate('/');
         },
       }
