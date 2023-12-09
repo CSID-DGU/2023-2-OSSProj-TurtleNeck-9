@@ -49,7 +49,7 @@ export default function ResponsiveDrawer(props: React.PropsWithChildren<Props>) 
 
   const handleSignoutClick = () => {
     signout();
-    navigate('signin');
+    navigate('/signin');
   };
 
   const handleDrawerToggle = () => {
