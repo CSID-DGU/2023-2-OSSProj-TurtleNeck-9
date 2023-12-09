@@ -17,7 +17,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Avatar, Menu, MenuItem, Tooltip } from '@mui/material';
 import { useSession } from '../hooks/useSession';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const settingsWithSession = ['로그아웃'];
 
@@ -34,9 +34,10 @@ interface Props {
 export default function ResponsiveDrawer(props: React.PropsWithChildren<Props>) {
   const { window, children } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const { hasSession, signout } = useSession();
+  const navigate = useNavigate();
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -54,22 +55,34 @@ export default function ResponsiveDrawer(props: React.PropsWithChildren<Props>) 
       <Toolbar />
       <Divider />
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+        <ListItem disablePadding>
+          <ListItemButton
+            onClick={() => {
+              navigate('/');
+            }}
+          >
+            <ListItemIcon>
+              <MenuIcon />
+            </ListItemIcon>
+            <ListItemText primary={'추천시간표조회'} />
+          </ListItemButton>
+        </ListItem>
+        {['학사정보', '공지사항'].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText secondary={text} />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
       <Divider />
       <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
+        {['강의시간표 조회', '출결관리', '성적관리'].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText secondary={text} />
             </ListItemButton>
           </ListItem>
         ))}
