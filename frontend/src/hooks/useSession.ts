@@ -16,7 +16,9 @@ export const useSession = () => {
   };
 
   useEffect(() => {
-    axios.defaults.headers.common['Authorization'] = token;
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = token;
+    }
   }, [token]);
 
   return { signout, hasSession: !!token };
