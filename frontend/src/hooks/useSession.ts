@@ -10,14 +10,14 @@ export const useSession = () => {
   const { data: token } = useAuthQuery();
 
   const signout = () => {
-    queryClient.removeQueries({ queryKey: authKeys.auth() });
     setCookie('access_token', '');
     axios.defaults.headers.common['Authorization'] = null;
+    queryClient.removeQueries({ queryKey: authKeys.auth() });
   };
 
   useEffect(() => {
     axios.defaults.headers.common['Authorization'] = token;
   }, [token]);
 
-  return { signout };
+  return { signout, hasSession: !!token };
 };
