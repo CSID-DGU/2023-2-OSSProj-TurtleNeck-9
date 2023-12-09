@@ -17,7 +17,7 @@ import { reset } from './style';
 const container = document.getElementById('root') as HTMLElement;
 
 const queryClient = new QueryClient();
-axios.defaults.baseURL = 'https://ec2-43-203-18-207.ap-northeast-2.compute.amazonaws.com';
+axios.defaults.baseURL = 'http://ec2-43-203-18-207.ap-northeast-2.compute.amazonaws.com';
 const router = createBrowserRouter([
   {
     path: '/',
