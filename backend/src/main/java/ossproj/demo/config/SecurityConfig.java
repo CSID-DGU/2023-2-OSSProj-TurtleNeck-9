@@ -16,6 +16,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import ossproj.demo.util.JwtTokenProvider;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 @Configuration
@@ -28,17 +29,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
-                    @Override
-                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-                        CorsConfiguration config = new CorsConfiguration();
-                        config.setAllowedOrigins(Collections.singletonList("*"));
-                        config.setAllowedMethods(Collections.singletonList("*"));
-                        config.setAllowCredentials(true);
-                        config.setAllowedHeaders(Collections.singletonList("*"));
-                        config.setMaxAge(3600L); //1시간
-                        return config;
-                    }
+                .cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
+                    CorsConfiguration config = new CorsConfiguration();
+                    config.setAllowedOriginPatterns(Collections.singletonList("*")); // 모든 오리진 허용
+                    config.setAllowCredentials(true); // 크로스 오리진 요청에서 사용자 인증 정보 허용
+                    config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // 모든 HTTP 메소드 허용
+                    config.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type")); // 필요한 헤더 허용
+                    config.setMaxAge(3600L); // 1시간
+                    return config;
                 }))
                 // HTTP Basic 인증 비활성화
                 .httpBasic(httpBasicConfigurer -> httpBasicConfigurer.disable())
