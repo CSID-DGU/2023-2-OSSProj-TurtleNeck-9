@@ -86,7 +86,7 @@ export default function ResponsiveDrawer(props: React.PropsWithChildren<Props>) 
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', paddingTop: '100px' }}>
       <CssBaseline />
       <AppBar
         position="fixed"

@@ -8,6 +8,7 @@ import Home from './pages';
 import TimeTableDetail from './pages/time-table';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { CssBaseline } from '@mui/material';
+import Signup from './pages/signup';
 
 const container = document.getElementById('root') as HTMLElement;
 
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: '/time-table/:timeTableNumber',
     element: <TimeTableDetail />,
+  },
+  {
+    path: '/signup',
+    element: <Signup />,
   },
 ]);
 
