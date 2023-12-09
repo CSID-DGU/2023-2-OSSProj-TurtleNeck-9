@@ -13,13 +13,13 @@ public class SignupResponse {
 
     private Long userId;
     private String username;
-    private String studentId;
+    private String studentNumber;
     private Long majorId;
 
     static public SignupResponse toUser(Users user) {
         return SignupResponse.builder()
                 .userId(user.getId())
-                .studentId(user.getStudentId())
+                .studentNumber(user.getStudentNumber())
                 .majorId(user.getMajor().getMajorId())
                 .username(user.getUsername())
                 .build();

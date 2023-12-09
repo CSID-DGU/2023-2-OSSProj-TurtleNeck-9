@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public SignupResponse signup(SignupRequest signupRequest) {
-        if (userRepository.existsByStudentId(signupRequest.getStudentId())) {
+        if (userRepository.existsByStudentNumber(signupRequest.getStudentNumber())) {
             throw new IllegalArgumentException("이미 사용중인 학번입니다.");
         }
         System.out.println("회원 가입시 " + signupRequest.getMajor_id());
@@ -56,8 +56,8 @@ public class UserServiceImpl implements UserService {
         return SignupResponse.toUser(userRepository.save(signupRequest.toEntity(encodedPassword, major, roles)));
     }
 
-    public Optional<Users> findByStudentId(String studentId) {
-        return userRepository.findByStudentId(studentId);
+    public Optional<Users> findByStudentNumber(String studentId) {
+        return userRepository.findByStudentNumber(studentId);
     }
 
     public Optional<Users> findByUserId(Long id) {
