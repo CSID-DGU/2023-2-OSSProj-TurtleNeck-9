@@ -16,9 +16,10 @@ import ResponsiveDrawer from '../../components/ResponsiveDrawer';
 import { useSignupMutation } from '../../query/auth';
 
 const Signup = () => {
-  const [majorId, setMajorId] = useState<number>();
+  const [majorId, setMajorId] = useState<number>(1);
   const { mutate: signup } = useSignupMutation();
   const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [studentId, setStudentId] = useState<number>();
   const handleMajorSelectChange = (e: SelectChangeEvent) => {
     const value = e.target.value;
@@ -33,6 +34,11 @@ const Signup = () => {
     const value = e.target.value;
     setStudentId(Number(value));
   };
+  const handlePasswordChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+  };
+
   return (
     <Container>
       <ResponsiveDrawer>
@@ -73,7 +79,7 @@ const Signup = () => {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={majorId}
+                    value={String(majorId)}
                     label="Age"
                     onChange={handleMajorSelectChange}
                   >
@@ -93,6 +99,8 @@ const Signup = () => {
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  value={password}
+                  onChange={handlePasswordChange}
                 />
               </Grid>
             </Grid>
