@@ -20,7 +20,7 @@ const Signin = () => {
     const value = e.target.value;
     setPassword(value);
   };
-  const handleSignupButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
+  const handleSigninButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
     signin(
       { student_id: Number(studentId), password: password },
       {
@@ -74,7 +74,7 @@ const Signin = () => {
               variant="contained"
               color="warning"
               sx={{ marginY: '20px' }}
-              onClick={handleSignupButtonClick}
+              onClick={handleSigninButtonClick}
             >
               로그인
             </Button>
