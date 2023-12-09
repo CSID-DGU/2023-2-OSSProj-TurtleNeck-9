@@ -18,6 +18,7 @@ import Typography from '@mui/material/Typography';
 import { Avatar, Menu, MenuItem, Tooltip } from '@mui/material';
 import { useSession } from '../hooks/useSession';
 import { Link, useNavigate } from 'react-router-dom';
+import { InsertChartTwoTone, IntegrationInstructionsOutlined } from '@mui/icons-material';
 
 const settingsWithSession = ['로그아웃'];
 
@@ -81,7 +82,9 @@ export default function ResponsiveDrawer(props: React.PropsWithChildren<Props>) 
         {['강의시간표 조회', '출결관리', '성적관리'].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InsertChartTwoTone /> : <IntegrationInstructionsOutlined />}
+              </ListItemIcon>
               <ListItemText secondary={text} />
             </ListItemButton>
           </ListItem>
