@@ -10,15 +10,23 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
+import { ChangeEventHandler, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ResponsiveDrawer from '../../components/ResponsiveDrawer';
+import { useSignupMutation } from '../../query/auth';
 
 const Signup = () => {
   const [majorId, setMajorId] = useState<number>();
+  const { mutate: signup } = useSignupMutation();
+  const [username, setUsername] = useState('');
   const handleMajorSelectChange = (e: SelectChangeEvent) => {
     const value = e.target.value;
     setMajorId(Number(value));
+  };
+
+  const handleUsernameChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const value = e.target.value;
+    setUsername(value);
   };
   return (
     <Container>
@@ -37,6 +45,8 @@ const Signup = () => {
                   id="username"
                   label="이름"
                   autoFocus
+                  onChange={handleUsernameChange}
+                  value={username}
                 />
               </Grid>
               <Grid item xs={12}>
