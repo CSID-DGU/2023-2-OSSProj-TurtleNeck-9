@@ -130,7 +130,9 @@ const Signup = () => {
             </Button>
             <Grid container>
               <Grid item>
-                <Link to="/signin">이미 계정이 있으신가요? 로그인하기</Link>
+                <Link style={{ color: 'inherit' }} to="/signin">
+                  이미 계정이 있으신가요? 로그인하기
+                </Link>
               </Grid>
             </Grid>
           </form>
