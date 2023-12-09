@@ -15,7 +15,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import ResponsiveDrawer from '../../components/ResponsiveDrawer';
 import { useSignupMutation } from '../../query/auth';
 
-const Signup = () => {
+const Signin = () => {
   const [majorId, setMajorId] = useState<number>(1);
   const { mutate: signup } = useSignupMutation();
   const [username, setUsername] = useState('');
@@ -56,7 +56,7 @@ const Signup = () => {
       <ResponsiveDrawer>
         <div>
           <Typography variant="h5" marginBottom="40px">
-            회원가입
+            로그인
           </Typography>
           <form noValidate>
             <Grid container spacing={2}>
@@ -140,4 +140,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Signin;
