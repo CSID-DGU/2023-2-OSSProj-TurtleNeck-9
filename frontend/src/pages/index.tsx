@@ -1,14 +1,24 @@
-import { Box, Button, Container, Typography } from '@mui/material';
+import { Box, Button } from '@mui/material';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Carousel from '../components/Carousel';
 import MediaCard from '../components/MediaCard';
 import ResponsiveDrawer from '../components/ResponsiveDrawer';
+import { useSession } from '../hooks/useSession';
 
 const Home = () => {
+  const { hasSession } = useSession();
+
   const navigate = useNavigate();
   const handleButtonClick = (timeTableNumber: number) => () => {
     navigate(`/time-table/${timeTableNumber}`);
   };
+
+  useEffect(() => {
+    if (!hasSession) {
+      navigate('/signin');
+    }
+  }, []);
   return (
     <ResponsiveDrawer>
       <Box

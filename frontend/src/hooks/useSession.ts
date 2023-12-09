@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { useAuthQuery } from '../query/auth';
 import { authKeys } from '../query/queryKeys';
-import { setCookie } from '../utils/cookie';
+import { getCookie, setCookie } from '../utils/cookie';
 
 export const useSession = () => {
   const queryClient = useQueryClient();
@@ -15,9 +15,17 @@ export const useSession = () => {
     queryClient.removeQueries({ queryKey: authKeys.auth() });
   };
 
+  const signin = (token: string) => {
+    setCookie('access_token', token, 10000000000);
+
+    queryClient.setQueryData(authKeys.auth(), token);
+  };
+
   useEffect(() => {
-    axios.defaults.headers.common['Authorization'] = token;
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = token;
+    }
   }, [token]);
 
-  return { signout, hasSession: !!token };
+  return { signout, hasSession: !!token || !!getCookie('access_token'), signin };
 };
