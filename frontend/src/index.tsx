@@ -11,13 +11,13 @@ import { CssBaseline } from '@mui/material';
 import Signup from './pages/signup';
 import Signin from './pages/signin';
 import axios from 'axios';
-import { getCookie } from './utils/cookie';
+import { Global } from '@emotion/react';
+import { reset } from './style';
 
 const container = document.getElementById('root') as HTMLElement;
 
 const queryClient = new QueryClient();
 axios.defaults.baseURL = 'https://ec2-43-203-18-207.ap-northeast-2.compute.amazonaws.com';
-axios.defaults.headers.common['Authorization'] = getCookie('access_token');
 const router = createBrowserRouter([
   {
     path: '/',
@@ -41,6 +41,7 @@ const root = createRoot(container);
 
 root.render(
   <QueryClientProvider client={queryClient}>
+    <Global styles={reset} />
     <CssBaseline />
     <RouterProvider router={router} />
   </QueryClientProvider>
