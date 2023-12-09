@@ -15,7 +15,7 @@ export const useSignupMutation = () => {
 };
 
 const postSignin = async (payload: SigninPayload) => {
-  const response = await axios.post('/users/login', payload);
+  const response = await axios.post<{ accessToken: string }>('/users/login', payload);
 
   return response.data;
 };
@@ -29,5 +29,5 @@ const getAuth = () => {
 };
 
 export const useAuthQuery = () => {
-  return useQuery({ queryFn: getAuth, queryKey: [authKeys.all] });
+  return useQuery({ queryFn: getAuth, queryKey: [authKeys.all], staleTime: Infinity });
 };

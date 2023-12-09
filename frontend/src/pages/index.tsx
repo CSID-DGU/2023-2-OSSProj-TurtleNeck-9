@@ -8,6 +8,7 @@ import { useSession } from '../hooks/useSession';
 
 const Home = () => {
   const { hasSession } = useSession();
+
   const navigate = useNavigate();
   const handleButtonClick = (timeTableNumber: number) => () => {
     navigate(`/time-table/${timeTableNumber}`);

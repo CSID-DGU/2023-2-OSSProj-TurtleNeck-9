@@ -2,13 +2,14 @@ import { Button, Container, Grid, TextField, Typography } from '@mui/material';
 import { ChangeEventHandler, MouseEventHandler, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import ResponsiveDrawer from '../../components/ResponsiveDrawer';
+import { useSession } from '../../hooks/useSession';
 import { useSigninMutation } from '../../query/auth';
 
 const Signin = () => {
   const { mutate: signin } = useSigninMutation();
   const [password, setPassword] = useState('');
   const [studentId, setStudentId] = useState('');
-
+  const { signin: signinClient } = useSession();
   const navigate = useNavigate();
 
   const handleStudentIdChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -24,7 +25,8 @@ const Signin = () => {
     signin(
       { studentNumber: Number(studentId), password: password },
       {
-        onSuccess: () => {
+        onSuccess: (data) => {
+          signinClient(data.accessToken);
           navigate('/');
         },
       }

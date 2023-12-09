@@ -44,9 +44,12 @@ export default function ResponsiveDrawer(props: React.PropsWithChildren<Props>) 
   };
 
   const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  const handleSignoutClick = () => {
     signout();
     navigate('signin');
-    setAnchorElUser(null);
   };
 
   const handleDrawerToggle = () => {
@@ -155,7 +158,7 @@ export default function ResponsiveDrawer(props: React.PropsWithChildren<Props>) 
                   onClose={handleCloseUserMenu}
                 >
                   {settingsWithSession.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <MenuItem key={setting} onClick={handleSignoutClick}>
                       <Typography textAlign="center">{setting}</Typography>
                     </MenuItem>
                   ))}
