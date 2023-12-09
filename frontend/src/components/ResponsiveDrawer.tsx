@@ -44,6 +44,8 @@ export default function ResponsiveDrawer(props: React.PropsWithChildren<Props>) 
   };
 
   const handleCloseUserMenu = () => {
+    signout();
+    navigate('signin');
     setAnchorElUser(null);
   };
 
