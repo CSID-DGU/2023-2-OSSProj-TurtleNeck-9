@@ -24,6 +24,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
+
                 // HTTP Basic 인증 비활성화
                 .httpBasic(httpBasicConfigurer -> httpBasicConfigurer.disable())
                 // CSRF 보안 비활성화
