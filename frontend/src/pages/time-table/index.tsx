@@ -7,6 +7,7 @@ import { useLectureListQuery } from '../../query/lecture';
 const TimeTableDetail = () => {
   const { timeTableNumber } = useParams();
   const { data } = useLectureListQuery(Number(timeTableNumber));
+
   return (
     <Container>
       <ResponsiveDrawer>
