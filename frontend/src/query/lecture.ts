@@ -19,7 +19,7 @@ export const useLectureListQuery = (timeTableNumber: number) => {
   const userId = studentUserIdMapper[studentId];
   return useQuery({
     queryFn: () => getLectureList(userId || 1),
-    queryKey: lectureKeys.list(),
+    queryKey: lectureKeys.list(userId),
     select: (lectureList) => {
       return lectureList.data[timeTableNumber - 1].lectures;
     },

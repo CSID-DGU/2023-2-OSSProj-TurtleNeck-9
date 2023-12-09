@@ -1,6 +1,6 @@
 export const lectureKeys = {
   all: 'lecture',
-  list: () => [lectureKeys.all, 'list'],
+  list: (userId: number) => [lectureKeys.all, 'list', userId],
 };
 
 export const authKeys = {
