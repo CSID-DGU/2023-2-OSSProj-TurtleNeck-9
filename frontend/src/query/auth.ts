@@ -3,7 +3,7 @@ import axios from 'axios';
 import { SignupPayload } from '../types/auth';
 
 const postSignup = async (payload: SignupPayload) => {
-  const response = await axios.post('http://43.203.18.207:8080/users/signup', payload);
+  const response = await axios.post('https://43.203.18.207:8080/users/signup', payload);
 
   return response.data;
 };

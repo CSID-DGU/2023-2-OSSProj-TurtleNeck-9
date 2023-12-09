@@ -10,7 +10,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { ChangeEventHandler, useState } from 'react';
+import { ChangeEventHandler, MouseEventHandler, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ResponsiveDrawer from '../../components/ResponsiveDrawer';
 import { useSignupMutation } from '../../query/auth';
@@ -20,7 +20,7 @@ const Signup = () => {
   const { mutate: signup } = useSignupMutation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [studentId, setStudentId] = useState<number>();
+  const [studentId, setStudentId] = useState('');
   const handleMajorSelectChange = (e: SelectChangeEvent) => {
     const value = e.target.value;
     setMajorId(Number(value));
@@ -32,13 +32,15 @@ const Signup = () => {
   };
   const handleStudentIdChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.target.value;
-    setStudentId(Number(value));
+    setStudentId(value);
   };
   const handlePasswordChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.target.value;
     setPassword(value);
   };
-
+  const handleSignupButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
+    signup({ student_id: Number(studentId), major_id: majorId, username: username, password: password });
+  };
   return (
     <Container>
       <ResponsiveDrawer>
@@ -104,7 +106,14 @@ const Signup = () => {
                 />
               </Grid>
             </Grid>
-            <Button type="submit" fullWidth variant="contained" color="warning" sx={{ marginY: '20px' }}>
+            <Button
+              type="button"
+              fullWidth
+              variant="contained"
+              color="warning"
+              sx={{ marginY: '20px' }}
+              onClick={handleSignupButtonClick}
+            >
               회원가입
             </Button>
             <Grid container>
