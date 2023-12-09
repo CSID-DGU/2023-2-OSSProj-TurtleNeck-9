@@ -43,7 +43,7 @@ const Signup = () => {
   };
   const handleSignupButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
     signup(
-      { student_id: Number(studentId), major_id: majorId, username: username, password: password },
+      { studentNumber: Number(studentId), major_id: majorId, username: username, password: password },
       {
         onSuccess: () => {
           navigate('/');
