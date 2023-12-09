@@ -10,21 +10,54 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { ChangeEventHandler, MouseEventHandler, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import ResponsiveDrawer from '../../components/ResponsiveDrawer';
+import { useSignupMutation } from '../../query/auth';
 
 const Signup = () => {
-  const [majorId, setMajorId] = useState<number>();
+  const [majorId, setMajorId] = useState<number>(1);
+  const { mutate: signup } = useSignupMutation();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [studentId, setStudentId] = useState('');
+
+  const navigate = useNavigate();
+
   const handleMajorSelectChange = (e: SelectChangeEvent) => {
     const value = e.target.value;
     setMajorId(Number(value));
+  };
+
+  const handleUsernameChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const value = e.target.value;
+    setUsername(value);
+  };
+  const handleStudentIdChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const value = e.target.value;
+    setStudentId(value);
+  };
+  const handlePasswordChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+  };
+  const handleSignupButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
+    signup(
+      { student_id: Number(studentId), major_id: majorId, username: username, password: password },
+      {
+        onSuccess: () => {
+          navigate('/');
+        },
+      }
+    );
   };
   return (
     <Container>
       <ResponsiveDrawer>
         <div>
-          <Typography variant="h5">회원가입</Typography>
+          <Typography variant="h5" marginBottom="40px">
+            회원가입
+          </Typography>
           <form noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -37,10 +70,22 @@ const Signup = () => {
                   id="username"
                   label="이름"
                   autoFocus
+                  onChange={handleUsernameChange}
+                  value={username}
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField variant="outlined" required fullWidth id="majorId" label="학번" name="majorId" />
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="studentId"
+                  label="학번"
+                  name="studentId"
+                  value={studentId}
+                  onChange={handleStudentIdChange}
+                  type="number"
+                />
               </Grid>
               <Grid item xs={12}>
                 <FormControl fullWidth>
@@ -48,7 +93,7 @@ const Signup = () => {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={majorId}
+                    value={String(majorId)}
                     label="Age"
                     onChange={handleMajorSelectChange}
                   >
@@ -68,10 +113,19 @@ const Signup = () => {
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  value={password}
+                  onChange={handlePasswordChange}
                 />
               </Grid>
             </Grid>
-            <Button type="submit" fullWidth variant="contained" color="warning" sx={{ marginY: '20px' }}>
+            <Button
+              type="button"
+              fullWidth
+              variant="contained"
+              color="warning"
+              sx={{ marginY: '20px' }}
+              onClick={handleSignupButtonClick}
+            >
               회원가입
             </Button>
             <Grid container>
