@@ -1,15 +1,4 @@
-import {
-  Button,
-  Container,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Button, Container, Grid, TextField, Typography } from '@mui/material';
 import { ChangeEventHandler, MouseEventHandler, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import ResponsiveDrawer from '../../components/ResponsiveDrawer';
@@ -24,19 +13,11 @@ const Signin = () => {
 
   const navigate = useNavigate();
 
-  const handleMajorSelectChange = (e: SelectChangeEvent) => {
-    const value = e.target.value;
-    setMajorId(Number(value));
-  };
-
   const handleUsernameChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.target.value;
     setUsername(value);
   };
-  const handleStudentIdChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const value = e.target.value;
-    setStudentId(value);
-  };
+
   const handlePasswordChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.target.value;
     setPassword(value);
@@ -74,35 +55,7 @@ const Signin = () => {
                   value={username}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="studentId"
-                  label="학번"
-                  name="studentId"
-                  value={studentId}
-                  onChange={handleStudentIdChange}
-                  type="number"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">전공</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={String(majorId)}
-                    label="Age"
-                    onChange={handleMajorSelectChange}
-                  >
-                    <MenuItem value={1}>산업시스템공학과</MenuItem>
-                    <MenuItem value={2}>정보통신공학과</MenuItem>
-                    <MenuItem value={3}>전자전기공학과</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
@@ -126,11 +79,13 @@ const Signin = () => {
               sx={{ marginY: '20px' }}
               onClick={handleSignupButtonClick}
             >
-              회원가입
+              로그인
             </Button>
             <Grid container>
               <Grid item>
-                <Link to="/signin">이미 계정이 있으신가요? 로그인하기</Link>
+                <Link to="/signup" style={{ color: 'inherit' }}>
+                  계정이 없으신가요? 회원가입하기
+                </Link>
               </Grid>
             </Grid>
           </form>
