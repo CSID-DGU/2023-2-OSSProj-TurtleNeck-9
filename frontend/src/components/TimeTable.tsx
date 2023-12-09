@@ -14,10 +14,11 @@ const TIME_LIST = Array.from({ length: 14 }, (_, index) => index + 9);
 const HEIGHT = 60;
 const WIDTH = '15%';
 
+const bgColors = ['lightblue', 'lightyellow', 'lightgreen', '#dda0dd', 'pink', '#FFDAB9'];
+
 type Props = {
   lectureList: Lecture[];
 };
-
 const TimeTable: FC<Props> = ({ lectureList }) => {
   return (
     <TableContainer component={Paper} sx={{ position: 'relative', minWidth: 700 }}>
@@ -49,8 +50,8 @@ const TimeTable: FC<Props> = ({ lectureList }) => {
           ))}
         </TableBody>
       </Table>
-      {lectureList.map((lecture) => (
-        <LectureBox lecture={lecture} key={lecture.lectureId} />
+      {lectureList.map((lecture, index) => (
+        <LectureBox lecture={lecture} key={lecture.lectureId} bgColor={bgColors[index % bgColors.length]} />
       ))}
     </TableContainer>
   );
@@ -64,6 +65,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     color: theme.palette.common.white,
     height: `${HEIGHT}px`,
     padding: 0,
+    fontSize: 25,
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -108,8 +110,10 @@ const resolveLeft = (weekday: Weekday) => {
 
 type LectureBoxProps = {
   lecture: Lecture;
+  bgColor: string;
 };
-const LectureBox: FC<LectureBoxProps> = ({ lecture }) => {
+
+const LectureBox: FC<LectureBoxProps> = ({ lecture, bgColor }) => {
   return (
     <>
       {lecture.lectureTime.map((lectureTimeItem) => (
@@ -117,7 +121,7 @@ const LectureBox: FC<LectureBoxProps> = ({ lecture }) => {
           key={lectureTimeItem.weekday + lectureTimeItem.startTime}
           width={WIDTH}
           height={resolveHeight(lectureTimeItem.startTime, lectureTimeItem.endTime)}
-          bgcolor="yellow"
+          bgcolor={bgColor}
           top={resolveTop(lectureTimeItem.startTime)}
           left={resolveLeft(lectureTimeItem.weekday)}
           position="absolute"

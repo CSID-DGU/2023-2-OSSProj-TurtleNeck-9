@@ -22,7 +22,7 @@ const Signin = () => {
   };
   const handleSigninButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
     signin(
-      { student_id: Number(studentId), password: password },
+      { studentNumber: Number(studentId), password: password },
       {
         onSuccess: () => {
           navigate('/');
