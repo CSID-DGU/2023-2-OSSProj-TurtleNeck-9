@@ -5,4 +5,5 @@ export const lectureKeys = {
 
 export const authKeys = {
   all: 'auth',
+  auth: () => ['auth'],
 };
