@@ -2,20 +2,18 @@ import { Button, Container, Grid, TextField, Typography } from '@mui/material';
 import { ChangeEventHandler, MouseEventHandler, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import ResponsiveDrawer from '../../components/ResponsiveDrawer';
-import { useSignupMutation } from '../../query/auth';
+import { useSigninMutation } from '../../query/auth';
 
 const Signin = () => {
-  const [majorId, setMajorId] = useState<number>(1);
-  const { mutate: signup } = useSignupMutation();
-  const [username, setUsername] = useState('');
+  const { mutate: signin } = useSigninMutation();
   const [password, setPassword] = useState('');
   const [studentId, setStudentId] = useState('');
 
   const navigate = useNavigate();
 
-  const handleUsernameChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+  const handleStudentIdChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.target.value;
-    setUsername(value);
+    setStudentId(value);
   };
 
   const handlePasswordChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -23,8 +21,8 @@ const Signin = () => {
     setPassword(value);
   };
   const handleSignupButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
-    signup(
-      { student_id: Number(studentId), major_id: majorId, username: username, password: password },
+    signin(
+      { student_id: Number(studentId), password: password },
       {
         onSuccess: () => {
           navigate('/');
@@ -43,16 +41,15 @@ const Signin = () => {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
-                  autoComplete="fname"
-                  name="username"
                   variant="outlined"
                   required
                   fullWidth
-                  id="username"
-                  label="이름"
-                  autoFocus
-                  onChange={handleUsernameChange}
-                  value={username}
+                  id="studentId"
+                  label="학번"
+                  name="studentId"
+                  value={studentId}
+                  onChange={handleStudentIdChange}
+                  type="number"
                 />
               </Grid>
 
