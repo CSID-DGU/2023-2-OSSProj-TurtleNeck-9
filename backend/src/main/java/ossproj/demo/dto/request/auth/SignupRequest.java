@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class SignupRequest {
-    private String studentId;
+    private String studentNumber;
     private String username;
     private Long major_id;
     private String password;
@@ -23,7 +23,7 @@ public class SignupRequest {
 
     public Users toEntity(String encodedPassword, Major major,List<String> roles) {
         return Users.builder()
-                .studentId(studentId)
+                .studentNumber(studentNumber)
                 .username(username)
                 .password(encodedPassword)
                 .major(major)

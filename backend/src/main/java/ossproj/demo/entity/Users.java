@@ -28,7 +28,7 @@ public class Users implements UserDetails {
     private Long id;
 
     @Column(length = 15, unique = true, nullable = false)
-    private String studentId;
+    private String studentNumber;
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -41,8 +41,8 @@ public class Users implements UserDetails {
     private String password;
 
     @Builder
-    public Users(String studentId, Major major, String username, String password) {
-        this.studentId = studentId;
+    public Users(String studentNumber, Major major, String username, String password) {
+        this.studentNumber = studentNumber;
         this.major = major;
         this.username = username;
         this.password = password;
