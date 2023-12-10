@@ -1,5 +1,5 @@
-import { Box, Button } from '@mui/material';
-import { useEffect } from 'react';
+import { Box, Button, CircularProgress, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Carousel from '../components/Carousel';
 import MediaCard from '../components/MediaCard';
@@ -8,6 +8,7 @@ import { useSession } from '../hooks/useSession';
 
 const Home = () => {
   const { hasSession } = useSession();
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
   const handleButtonClick = (timeTableNumber: number) => () => {
@@ -18,6 +19,11 @@ const Home = () => {
     if (!hasSession) {
       navigate('/signin');
     }
+  }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
   }, []);
   return (
     <ResponsiveDrawer>
@@ -30,6 +36,16 @@ const Home = () => {
         paddingTop="300px"
       >
         <Carousel />
+        <Box display="flex" justifyContent="center" alignItems="center" gap="5px" mt="30px" minHeight="30px">
+          {isLoading ? (
+            <>
+              <CircularProgress size="30px" />
+              <Typography variant="body2">기존 수강과목 동기화 중...</Typography>
+            </>
+          ) : (
+            <Typography variant="body2">기존 수강과목 동기화 완료 ✅</Typography>
+          )}
+        </Box>
         <Box display="flex" justifyContent="space-around" width="100%" gap="5px" mt="30px">
           <MediaCard title="추천 시간표 1️⃣" description="📌 공강있는 시간표">
             <Button size="medium" variant="contained" color="warning" onClick={handleButtonClick(1)}>
