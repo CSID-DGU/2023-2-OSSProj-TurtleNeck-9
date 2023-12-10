@@ -24,13 +24,15 @@ def fetch_row_by_id(row_id):#여기엔 user_id or student_id 등 행을 뽑을 �
         cursor_major_id = connection.cursor()
         query = "SELECT * FROM users WHERE user_id = %s"
         cursor_major_id.execute(query,(row_id,))
-        major_id = int(cursor_major_id.fetchone()[4])
+        major_id = int(cursor_major_id.fetchone()[3])
+        print("major_id = ",major_id)
         cursor_major_id.close()
 
         cursor_major_name = connection.cursor()
         query = "SELECT * FROM major WHERE major_id = %s"
         cursor_major_name.execute(query,(major_id,))
-        major_name = cursor_major_name.fetchone()[1]
+        major_name = cursor_major_name.fetchone()
+        major_name = major_name[1]
         cursor_major_name.close()
 
         if result:
