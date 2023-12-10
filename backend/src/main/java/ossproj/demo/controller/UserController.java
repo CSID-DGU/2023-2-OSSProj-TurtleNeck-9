@@ -32,7 +32,7 @@ public class UserController {
 
     @PostMapping("/login")
     public JwtToken login(@RequestBody LoginRequest loginRequest) {
-        String studentId = loginRequest.getStudentId();
+        String studentId = loginRequest.getStudentNumber();
         String password = loginRequest.getPassword();
         JwtToken jwtToken = userService.login(studentId, password);
         log.info("requset studentId = {} , password = {}", studentId, password);
