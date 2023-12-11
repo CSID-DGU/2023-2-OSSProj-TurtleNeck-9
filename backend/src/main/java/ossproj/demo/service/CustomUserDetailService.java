@@ -22,7 +22,7 @@ public class CustomUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String studentNumber) throws UsernameNotFoundException {
         Optional<Users> findOne = userRepository.findByStudentNumber(studentNumber);
-        Users user =findOne.orElseThrow(() -> new UsernameNotFoundException("해당하는 회원을 찾을 수 없습니다."));
+        Users user = findOne.orElseThrow(() -> new UsernameNotFoundException("해당하는 회원을 찾을 수 없습니다."));
         return User.builder()
                 .username(user.getStudentNumber())
                 .password(user.getPassword())
