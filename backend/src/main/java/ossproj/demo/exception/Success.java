@@ -18,7 +18,8 @@ public enum Success {
      * STATUS CODE : 201 OK
      */
     POST_ALREADYLECTURES_SUCCESS(HttpStatus.CREATED,"유저 기존 수강 과목 등록 성공"),
-    POST_SIGNUP_SUCCESS(HttpStatus.CREATED,"유저 생성 성공");
+    POST_SIGNUP_SUCCESS(HttpStatus.CREATED,"유저 생성 성공"),
+    POST_LOGIN_SUCCESS(HttpStatus.CREATED,"로그인 성공");
 
 
     private final HttpStatus httpStatus;

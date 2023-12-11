@@ -22,7 +22,7 @@ public class AlreadyLectureService {
 
     public AlreadyLectureSaveResponse saveUserAlreadyLecture(Long userId, AlreadyLectureSaveRequest saveRequest) {
         Users user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-
+        System.out.println("user = " + user);
         AlreadyLecture generateAlreadyLecture = AlreadyLecture.builder()
                 .user(user)
                 .alFirstLectureName(saveRequest.getAlFirstLectureName())
