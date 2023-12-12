@@ -27,9 +27,10 @@ const Signin = () => {
       { studentNumber: Number(studentId), password: password },
       {
         onSuccess: (data) => {
-          signinClient(data.accessToken);
+          signinClient(data.jwtToken.accessToken);
           // 백엔드 인증 구현 이슈로 임시 하드코딩
-          setCookie('studentId', studentId, 10000000000);
+          setCookie('major_id', String(data.major_id), 10000000000);
+          setCookie('user_id', String(data.user_id), 10000000000);
           navigate('/');
         },
       }

@@ -9,17 +9,13 @@ const getLectureList = async (userId: number) => {
 
   return response.data;
 };
-const studentUserIdMapper: Record<string, number> = {
-  20180001: 1,
-  20190001: 2,
-  20200001: 3,
-};
+
 export const useLectureListQuery = (timeTableNumber: number) => {
-  const studentId = getCookie('studentId');
-  const userId = studentUserIdMapper[studentId];
+  const majorId = getCookie('major_id');
+
   return useQuery({
-    queryFn: () => getLectureList(userId || 1),
-    queryKey: lectureKeys.list(userId),
+    queryFn: () => getLectureList(Number(majorId)),
+    queryKey: lectureKeys.list(Number(majorId)),
     select: (lectureList) => {
       return lectureList.data[timeTableNumber - 1].lectures;
     },

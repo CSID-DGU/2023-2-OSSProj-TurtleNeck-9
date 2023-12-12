@@ -15,9 +15,12 @@ export const useSignupMutation = () => {
 };
 
 const postSignin = async (payload: SigninPayload) => {
-  const response = await axios.post<{ accessToken: string }>('/users/login', payload);
+  const response = await axios.post<{ data: { jwtToken: { accessToken: string }; major_id: number; user_id: number } }>(
+    '/users/login',
+    payload
+  );
 
-  return response.data;
+  return response.data.data;
 };
 
 export const useSigninMutation = () => {

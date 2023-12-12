@@ -11,6 +11,8 @@ export const useSession = () => {
 
   const signout = () => {
     setCookie('access_token', '');
+    setCookie('major_id', '');
+    setCookie('user_id', '');
     axios.defaults.headers.common['Authorization'] = null;
     queryClient.removeQueries({ queryKey: authKeys.auth() });
   };
