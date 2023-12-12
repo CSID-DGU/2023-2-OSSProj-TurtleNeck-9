@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ossproj.demo.dto.JwtToken;
 import ossproj.demo.dto.request.auth.SignupRequest;
+import ossproj.demo.dto.response.LoginResponse;
 import ossproj.demo.dto.response.SignupResponse;
 import ossproj.demo.entity.Major;
 import ossproj.demo.entity.Users;
@@ -33,12 +34,16 @@ public class UserServiceImpl implements UserService {
 
 
     @Transactional
-    public JwtToken login(String studentId, String password) {
+    public LoginResponse login(String studentId, String password) {
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(studentId, password);
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-
-        return jwtTokenProvider.generateToken(authentication);
+        String studentNumber = authentication.getName();
+        Long userId = userRepository.findIdByStudentNumber(studentNumber);
+        Major userMajor = userRepository.findMajorByStudentNumber(studentNumber);
+        Long majorId = userMajor.getMajorId();
+        JwtToken jwtToken = jwtTokenProvider.generateToken(authentication);
+        return new LoginResponse(jwtToken, userId,majorId);
     }
 
     @Transactional

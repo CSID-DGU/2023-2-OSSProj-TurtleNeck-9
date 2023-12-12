@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ossproj.demo.dto.JwtToken;
 import ossproj.demo.dto.request.auth.LoginRequest;
 import ossproj.demo.dto.request.auth.SignupRequest;
+import ossproj.demo.dto.response.LectureResponse;
+import ossproj.demo.dto.response.LoginResponse;
 import ossproj.demo.dto.response.SignupResponse;
 import ossproj.demo.dto.response.SuccessResponse;
 import ossproj.demo.exception.Success;
@@ -31,13 +33,11 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public JwtToken login(@RequestBody LoginRequest loginRequest) {
+    public SuccessResponse<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
         String studentId = loginRequest.getStudentNumber();
         String password = loginRequest.getPassword();
-        JwtToken jwtToken = userService.login(studentId, password);
-        log.info("requset studentId = {} , password = {}", studentId, password);
-        log.info("jwtToken accessToken = {}, refreshToken = {}", jwtToken.getAccessToken(), jwtToken.getRefreshToken());
-        return jwtToken;
+        LoginResponse login = userService.login(studentId, password);
+        return SuccessResponse.success(Success.POST_LOGIN_SUCCESS, login);
     }
 
     @PostMapping("/test")
