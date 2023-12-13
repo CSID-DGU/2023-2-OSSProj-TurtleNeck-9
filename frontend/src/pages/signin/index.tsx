@@ -81,6 +81,7 @@ const Signin = () => {
               color="warning"
               sx={{ marginY: '20px' }}
               onClick={handleSigninButtonClick}
+              disabled={!(password && studentId)}
             >
               로그인
             </Button>

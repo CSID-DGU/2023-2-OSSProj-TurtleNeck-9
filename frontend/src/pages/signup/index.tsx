@@ -125,6 +125,7 @@ const Signup = () => {
               color="warning"
               sx={{ marginY: '20px' }}
               onClick={handleSignupButtonClick}
+              disabled={!(username && password && majorId && studentId)}
             >
               회원가입
             </Button>
