@@ -33,6 +33,9 @@ const Signin = () => {
           setCookie('user_id', String(data.user_id), 10000000000);
           navigate('/');
         },
+        onError: () => {
+          alert('오류가 발생했습니다.');
+        },
       }
     );
   };
